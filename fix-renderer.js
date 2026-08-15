@@ -29,7 +29,7 @@ const liveLoader = `  const SUPABASE_URL = 'https://gsgvejjnorbnizddjnfw.supabas
   const SUPABASE_KEY = 'sb_publishable_A4eEoTqk47CdDo76iJZGqg_w-4qg7fd';
   const loadFile = async (file) => {
     if (!cache.has(file)) {
-      const url = \`${SUPABASE_URL}/rest/v1/ala_content?path=eq.\${encodeURIComponent(file)}&select=content\`;
+      const url = \`\${SUPABASE_URL}/rest/v1/ala_content?path=eq.\${encodeURIComponent(file)}&select=content\`;
       cache.set(file, fetch(url, { cache:'no-store', headers:{ apikey:SUPABASE_KEY } }).then(async r => {
         if(!r.ok) throw new Error(file);
         const rows=await r.json();
