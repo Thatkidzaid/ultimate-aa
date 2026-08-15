@@ -1,12 +1,136 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex,nofollow">
-  <title>Ultimate AA — Content Editor</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Ultimate AA Editor</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--bg:#f4f1ea;--paper:#fffefb;--ink:#202733;--muted:#66717f;--line:#ddd5c8;--gold:#d4a42f;--goldsoft:#fff3c9;--danger:#b42318;--ok:#187a45}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:linear-gradient(180deg,#faf8f3,var(--bg));color:var(--ink)}
+.wrap{width:min(1100px,calc(100% - 32px));margin:0 auto;padding:36px 0 70px}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:24px}.brand h1{margin:0;font-size:1.55rem}.brand p{margin:5px 0 0;color:var(--muted)}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;box-shadow:0 12px 30px rgba(48,40,29,.07);padding:24px}.auth{max-width:470px;margin:9vh auto}.auth h2{margin-top:0}.field{display:grid;gap:7px;margin:15px 0}.field label{font-weight:700}.field input,.field textarea{width:100%;border:1px solid #cfc7ba;border-radius:10px;padding:11px 12px;font:inherit;background:#fff}.field input[readonly]{background:#f4f1ea;color:#5d6672}.field textarea{min-height:110px;resize:vertical}.btn{border:0;border-radius:10px;padding:11px 16px;font-weight:800;cursor:pointer}.btn:disabled{opacity:.55;cursor:not-allowed}.primary{background:var(--gold);color:#241c08}.secondary{background:#eee9df;color:var(--ink)}.danger{background:#fee4e2;color:var(--danger)}.hidden{display:none!important}.status{margin-top:12px;color:var(--muted);font-size:.92rem}.error{color:var(--danger)!important}.success{color:var(--ok)!important}
+.layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:20px}.side{position:sticky;top:18px;height:max-content;max-height:calc(100vh - 36px);overflow:auto}.side button{display:block;width:100%;text-align:left;border:0;background:transparent;padding:10px 12px;border-radius:9px;cursor:pointer;font-weight:700;color:#3a4654}.side button:hover,.side button.active{background:var(--goldsoft);color:#5d4307}.editor h2{margin:0 0 4px}.editor .desc{margin:0 0 20px;color:var(--muted)}.group{border-top:1px solid #ece6dc;padding-top:18px;margin-top:18px}.group:first-of-type{border-top:0;padding-top:0}.group h3,.group h4{margin:0 0 12px}.array-item{display:grid;grid-template-columns:1fr auto;gap:8px;margin:8px 0}.toolbar{display:flex;gap:10px;align-items:center;justify-content:flex-end;margin-top:24px;padding-top:18px;border-top:1px solid #ece6dc}.save-note{margin-right:auto;color:var(--muted);font-size:.92rem}.chip{display:inline-block;padding:5px 9px;border-radius:999px;background:#eef2f6;color:#475467;font-size:.82rem;font-weight:700}.live-note{padding:10px 12px;border-radius:10px;background:#edf8f1;color:#24633e;font-size:.9rem;margin:0 0 18px}.subtle{font-size:.88rem;color:var(--muted);line-height:1.5}
+@media(max-width:800px){.layout{grid-template-columns:1fr}.side{position:static;max-height:none}.top{align-items:flex-start;flex-direction:column}.side .navgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}}
+</style>
 </head>
 <body>
-  <script src="https://unpkg.com/decap-cms@3.15.1/dist/decap-cms.js"></script>
-</body>
-</html>
+<div class="wrap">
+  <section id="setupCard" class="card auth hidden">
+    <h2>Set up Ultimate AA Editor</h2>
+    <p class="subtle">One-time setup. Create the password that will be used with the editor login below. The password is hashed immediately and is never stored in the website files.</p>
+    <div class="field"><label>Email</label><input id="setupEmail" type="email" value="admin@gmail.com" readonly></div>
+    <div class="field"><label for="setupPassword">Create password</label><input id="setupPassword" type="password" autocomplete="new-password"></div>
+    <div class="field"><label for="setupPassword2">Confirm password</label><input id="setupPassword2" type="password" autocomplete="new-password"></div>
+    <button id="setupBtn" class="btn primary">Create editor login</button>
+    <div id="setupStatus" class="status"></div>
+  </section>
+
+  <section id="loginCard" class="card auth hidden">
+    <h2>Ultimate AA Editor</h2>
+    <p class="subtle">Private content editor. Sign in with the editor email and password.</p>
+    <div class="field"><label for="email">Email</label><input id="email" type="email" value="admin@gmail.com" autocomplete="username"></div>
+    <div class="field"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password"></div>
+    <button id="loginBtn" class="btn primary">Sign in</button>
+    <div id="loginStatus" class="status"></div>
+  </section>
+
+  <div id="app" class="hidden">
+    <div class="top">
+      <div class="brand"><h1>Ultimate AA Editor</h1><p>Edit content only. Website design and formatting remain protected.</p></div>
+      <div><span class="chip">admin@gmail.com</span> <button id="logoutBtn" class="btn secondary">Sign out</button></div>
+    </div>
+    <div class="layout">
+      <aside class="card side"><div id="nav" class="navgrid"></div></aside>
+      <main class="card editor">
+        <h2 id="sectionTitle">Choose a section</h2>
+        <p id="sectionDesc" class="desc"></p>
+        <div class="live-note">Changes go live immediately when you press <strong>Publish to site</strong>. No Netlify redeploy is required.</div>
+        <div id="form"></div>
+        <div class="toolbar">
+          <span id="saveStatus" class="save-note"></span>
+          <button id="reloadBtn" class="btn secondary">Discard changes</button>
+          <button id="publishBtn" class="btn primary">Publish to site</button>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+<script>
+const SUPABASE_URL='https://gsgvejjnorbnizddjnfw.supabase.co';
+const SUPABASE_KEY='sb_publishable_A4eEoTqk47CdDo76iJZGqg_w-4qg7fd';
+const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}});
+const TOKEN_KEY='ultimate_aa_editor_token_v1';
+const files=[
+ ['Adverb / Verb Combinations','adverb-verbs.json'],
+ ['Introduction','introduction.json'],['Shepherding','shepherding.json'],['Substantiating','substantiating.json'],['Mobilising','mobilising.json'],['Conclusion','conclusion.json'],['5 Steps of Analysis','analysis.json'],['Next Level Analysis','next-level-analysis.json'],['Quick Reference','quick-reference.json'],
+ ['Plosive','techniques/plosive.json'],['Alliteration','techniques/alliteration.json'],['Anaphora','techniques/anaphora.json'],['Rhetorical Questions','techniques/rhetorical-questions.json'],['Imagery Types','techniques/imagery-types.json'],['Bold Word / Title','techniques/bold-word-title.json'],['Anecdotal Evidence','techniques/anecdotal-evidence.json'],['Dichotomy','techniques/dichotomy.json'],['Statistics','techniques/statistics.json'],['Tonal Shift','techniques/tonal-shift.json'],['Connotations','techniques/connotations.json'],['Image Analysis','techniques/image-analysis.json'],['Asyndeton','techniques/asyndeton.json'],['Semantic Field','techniques/semantic-field.json'],['Auxesis','techniques/auxesis.json'],['Syntactic Parallelism','techniques/syntactic-parallelism.json']
+];
+let token=localStorage.getItem(TOKEN_KEY)||'';
+let currentPath=null,currentData=null;
+const $=s=>document.querySelector(s);
+function human(s){return String(s).replace(/[_-]+/g,' ').replace(/\b\w/g,m=>m.toUpperCase())}
+function setStatus(el,msg,type=''){el.textContent=msg;el.classList.remove('error','success');if(type)el.classList.add(type)}
+async function rpc(name,args={}){const {data,error}=await sb.rpc(name,args);if(error)throw error;return data}
+async function init(){
+  try{
+    const initialized=await rpc('ala_editor_initialized');
+    if(!initialized){showSetup();return;}
+    if(token && await rpc('ala_editor_session_valid',{p_token:token})){showApp();return;}
+    token='';localStorage.removeItem(TOKEN_KEY);showLogin();
+  }catch(e){showLogin();setStatus($('#loginStatus'),'Could not connect to the editor service. Refresh and try again.','error')}
+}
+function showSetup(){$('#setupCard').classList.remove('hidden');$('#loginCard').classList.add('hidden');$('#app').classList.add('hidden')}
+function showLogin(){$('#setupCard').classList.add('hidden');$('#loginCard').classList.remove('hidden');$('#app').classList.add('hidden')}
+function showApp(){$('#setupCard').classList.add('hidden');$('#loginCard').classList.add('hidden');$('#app').classList.remove('hidden');buildNav();loadFile(files[0][1],files[0][0])}
+$('#setupBtn').onclick=async()=>{
+  const p1=$('#setupPassword').value,p2=$('#setupPassword2').value;
+  if(p1.length<10){setStatus($('#setupStatus'),'Use at least 10 characters.','error');return}
+  if(p1!==p2){setStatus($('#setupStatus'),'Passwords do not match.','error');return}
+  $('#setupBtn').disabled=true;setStatus($('#setupStatus'),'Creating editor login…');
+  try{
+    const ok=await rpc('ala_editor_initialize',{p_email:'admin@gmail.com',p_password:p1});
+    if(!ok)throw new Error('Setup could not be completed. It may already be configured.');
+    const t=await rpc('ala_editor_login',{p_email:'admin@gmail.com',p_password:p1});
+    if(!t)throw new Error('Login creation succeeded but sign-in failed.');
+    token=t;localStorage.setItem(TOKEN_KEY,token);$('#setupPassword').value='';$('#setupPassword2').value='';showApp();
+  }catch(e){setStatus($('#setupStatus'),e.message||'Setup failed.','error')}finally{$('#setupBtn').disabled=false}
+};
+$('#loginBtn').onclick=async()=>{
+  const email=$('#email').value.trim(),password=$('#password').value;
+  $('#loginBtn').disabled=true;setStatus($('#loginStatus'),'Signing in…');
+  try{
+    const t=await rpc('ala_editor_login',{p_email:email,p_password:password});
+    if(!t)throw new Error('Incorrect email or password.');
+    token=t;localStorage.setItem(TOKEN_KEY,token);$('#password').value='';showApp();
+  }catch(e){setStatus($('#loginStatus'),e.message||'Sign in failed.','error')}finally{$('#loginBtn').disabled=false}
+};
+$('#logoutBtn').onclick=async()=>{try{if(token)await rpc('ala_editor_logout',{p_token:token})}catch{}token='';localStorage.removeItem(TOKEN_KEY);showLogin()};
+function buildNav(){const n=$('#nav');n.innerHTML='';files.forEach(([label,path])=>{const b=document.createElement('button');b.textContent=label;b.dataset.path=path;b.onclick=()=>loadFile(path,label);n.appendChild(b)})}
+async function loadFile(path,label){
+  currentPath=path;setStatus($('#saveStatus'),'Loading…');document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.path===path));
+  try{
+    const {data,error}=await sb.from('ala_content').select('content,updated_at,updated_by').eq('path',path).single();
+    if(error)throw error;currentData=structuredClone(data.content);$('#sectionTitle').textContent=label;$('#sectionDesc').textContent=data.updated_at?'Last published '+new Date(data.updated_at).toLocaleString():'Edit the fields below.';renderRoot(currentData);setStatus($('#saveStatus'),'Loaded');
+  }catch(e){$('#form').innerHTML='<p class="error">Could not load this section.</p>';setStatus($('#saveStatus'),'Load failed','error')}
+}
+function renderRoot(obj){const root=$('#form');root.innerHTML='';Object.keys(obj).forEach(k=>root.appendChild(renderField(obj,k,[k])))}
+function renderField(parent,key,path){const value=parent[key];const wrap=document.createElement('div');wrap.className='group';
+ if(Array.isArray(value)){const h=document.createElement('h3');h.textContent=human(key);wrap.appendChild(h);const list=document.createElement('div');value.forEach((v,i)=>list.appendChild(renderArrayItem(value,i,path.concat(i))));wrap.appendChild(list);const add=document.createElement('button');add.className='btn secondary';add.textContent='+ Add item';add.onclick=()=>{value.push('');renderRoot(currentData);setStatus($('#saveStatus'),'Unsaved changes')};wrap.appendChild(add);return wrap}
+ if(value&&typeof value==='object'){const h=document.createElement('h3');h.textContent=human(key);wrap.appendChild(h);Object.keys(value).forEach(k=>wrap.appendChild(renderField(value,k,path.concat(k))));return wrap}
+ const f=document.createElement('div');f.className='field';const l=document.createElement('label');l.textContent=human(key);const text=String(value??'');const input=document.createElement(text.length>80?'textarea':'input');input.value=text;input.oninput=()=>{parent[key]=input.value;setStatus($('#saveStatus'),'Unsaved changes')};f.append(l,input);wrap.appendChild(f);return wrap}
+function renderArrayItem(arr,i,path){const row=document.createElement('div');row.className='array-item';if(arr[i]&&typeof arr[i]==='object'){const box=document.createElement('div');Object.keys(arr[i]).forEach(k=>box.appendChild(renderField(arr[i],k,path.concat(k))));row.appendChild(box)}else{const ta=document.createElement('textarea');ta.value=arr[i]??'';ta.oninput=()=>{arr[i]=ta.value;setStatus($('#saveStatus'),'Unsaved changes')};row.appendChild(ta)}const del=document.createElement('button');del.className='btn danger';del.textContent='Remove';del.onclick=()=>{arr.splice(i,1);renderRoot(currentData);setStatus($('#saveStatus'),'Unsaved changes')};row.appendChild(del);return row}
+$('#reloadBtn').onclick=()=>{const x=files.find(f=>f[1]===currentPath);if(x)loadFile(x[1],x[0])};
+$('#publishBtn').onclick=async()=>{
+  if(!currentPath||!currentData)return;$('#publishBtn').disabled=true;setStatus($('#saveStatus'),'Publishing…');
+  try{
+    if(!token || !(await rpc('ala_editor_session_valid',{p_token:token}))){token='';localStorage.removeItem(TOKEN_KEY);showLogin();throw new Error('Your editor session expired. Sign in again.');}
+    const ok=await rpc('ala_editor_save',{p_token:token,p_path:currentPath,p_content:currentData});
+    if(!ok)throw new Error('Publish failed.');
+    setStatus($('#saveStatus'),'Published live.','success');
+    const x=files.find(f=>f[1]===currentPath);setTimeout(()=>x&&loadFile(x[1],x[0]),500);
+  }catch(e){setStatus($('#saveStatus'),e.message||'Publish failed.','error')}finally{$('#publishBtn').disabled=false}
+};
+init();
+</script>
+</body></html>
