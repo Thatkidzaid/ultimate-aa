@@ -1,0 +1,12 @@
+{
+  "templates": [
+    [
+      "Given ‘hello’ in ‘hello there’ is emboldened, X seeks to visually bombard _ to emphasise … (the point being made)"
+    ]
+  ],
+  "examples": [
+    [
+      "Given ’dangerous’ in ‘broadmeadows is dangerous’ is emboldened, X seeks to visually bombard the parents who care for their children's safety to emphasise that Broadmeadows is a location to avoid, as the crime rates have increased rapidly over 30% in the last 3 years."
+    ]
+  ]
+}

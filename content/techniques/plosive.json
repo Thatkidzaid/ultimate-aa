@@ -1,0 +1,19 @@
+{
+  "definition_lines": [
+    "Plosive: two words that start either with 't, k, p, OR d, g, b'"
+  ],
+  "templates": [
+    [
+      "(Author) seeks to create an onomatopoeic soundscape through the plosives of ('d,b,g,t,k,p' – pick first letter) and ('d,b,g,t,k,p – pick second letter),",
+      "aurally reflecting the importance of ..."
+    ]
+  ],
+  "examples": [
+    [
+      "Farid seeks to create an onomatopoeic soundscape through the plosives of ‘p’ and ‘t’ within the word ‘powerfully training’, aurally reflecting the importance of physical exercise in Dagestan much like Khabib."
+    ],
+    [
+      "Penrose seeks to formulate an onomatopoeic soundscape through the plosives of ‘p’ and A‘T’ within the words ‘Phantasmagorical thoughts’, aurally reflecting the importance of one’s imaginative psyche, akin to Fischer who actively resides within the parameters of his dreams."
+    ]
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "topic_template_lines": [
+    "From the outset, the author (adverb) begins their piece by (adverb) presenting a (type of argument),",
+    "(adverb) highlighting …, to predispose (PREPARE) the audience to the subsequent arguments"
+  ],
+  "topic_examples": [
+    "From the outset, ABU HALEEB wholeheartedly begins their piece by forthrightly presenting a community-based argument zealously highlighting the importance of sacrifice in the medical profession, to predispose medical staff to his subsequent arguments.",
+    "From the outset, Mick wholeheartedly begins her piece by candidly presenting a medicalbased argument, passionately highlighting the health benefits that come out of swimming, to predispose VCE students to her subsequent arguments."
+  ],
+  "argument_types": [
+    "Community-based argument - social, people",
+    "Fiscal argument - financial",
+    "Sentimental argument - reminding you of the past",
+    "Logistics argument - systems behind how to make something a reality",
+    "Environmental argument - environment",
+    "Medical-based argument - health-based",
+    "Legalistic argument - laws",
+    "Cogent argument – logical, intuitive",
+    "Didactic argument - moral / values argument"
+  ],
+  "linking_template": "Ultimately, the (author) (adverb) commences their piece by shepherding them into a heightened state of ... by establishing ...",
+  "linking_example": "Ultimately, the Art and Media Club vehemently commences their piece by shepherding them into a heightened state of joy and reminiscence by establishing their outstanding connection with the new library and the monumental impacts of the old library on generations."
+}

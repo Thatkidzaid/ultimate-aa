@@ -1,0 +1,31 @@
+{
+  "subtechniques": [
+    {
+      "title": "Visceral / Cataclysmic / Sensory Imagery",
+      "templates": [
+        "Cataclysmically portraying that '...', (author) viscerally establishes a war-like battlefield regarding ..., since term 'word' conjures a destructive image of ..."
+      ],
+      "examples": [
+        "Cataclysmically portraying that 'studying VCE is like bleeding every single day in a world of enemies', Mariam establishes a war-like battlefield regarding the struggles of VCE and exams, since the term 'bleeding' conjures a destructive image of blood loss due to the assessments."
+      ]
+    },
+    {
+      "title": "Utopic Imagery",
+      "templates": [
+        "Utopically presenting that '...', (author) euphorically highlights ... given the word '...' creates an image of ..."
+      ],
+      "examples": [
+        "Utopically presenting that 'doing pushups will make you fly above the sky', Zohair euphorically highlights the power of exercise on the mind of individuals given the word 'fly' creates an image of elevation."
+      ]
+    },
+    {
+      "title": "Dystopic Imagery",
+      "templates": [
+        "In dystopically presenting that '...', (author) despondently / melancholically underscores... given the term '...' imbues connotations of ..."
+      ],
+      "examples": [
+        "In dystopically presenting that 'chocolate is the silent zombie that murders innocent people', Lebdeh despondently underscores the dangers of consuming junk food given the term 'silent zombie' imbues connotations of destruction and annihilation."
+      ]
+    }
+  ]
+}

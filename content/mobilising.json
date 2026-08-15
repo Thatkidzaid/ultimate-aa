@@ -1,0 +1,22 @@
+{
+  "standard": {
+    "topic_template": "Ultimately, (author) (adverb) finalises their () piece by (adverb) calling for (type of person) to ...",
+    "topic_example": "Ultimately, Rohaan fearfully finalises his passionate piece by forthrightly calling for individuals to go to Hawaii and achieve monetary success.",
+    "linking_template": "To this end, author (adverb) concludes their piece by mobilising such (type of person) to recognise ...",
+    "linking_example": "To this end, Wiley passionately concludes her piece by mobilising such residents to recognise the importance of the tourist attraction given the communal benefits as well as the increased care people in the town will have."
+  },
+  "minimum_effort": {
+    "description": "Makes the solution seem easy to implement, lowering the audience’s perceived barrier to action.",
+    "topic_template": "Ultimately, (author) (adverb) finalises their (type of piece) by (adverb) presenting a (type of argument), highlighting the minimal effort required to ... and the maximum benefit of ..., to mobilise (type of person) to ...",
+    "topic_example": "Ultimately, Wiley passionately finalises her piece by forthrightly presenting a community-based argument, highlighting the minimal effort required to support the tourist attraction and the maximum communal benefit that will emerge, to mobilise Lawton residents to champion its implementation.",
+    "linking_template": "To this end, (author) (adverb) concludes their piece by mobilising such (type of person) to recognise the ease of ... given the ... benefits it will provide.",
+    "linking_example": "To this end, Wiley passionately concludes her piece by mobilising such residents to recognise the ease of supporting the tourist attraction given the fiscal and communal benefits it will provide."
+  },
+  "cyclical_bookending": {
+    "description": "The author ends in a certain way which links to the beginning",
+    "topic_template": "Ultimately, by (adverb) returning to the (type of argument) established from the outset, (author) cyclically bookends their piece by (adverb) echoing ..., reinforcing ... and mobilising (type of person) to ...",
+    "topic_example": "Ultimately, by passionately returning to the community-based argument established from the outset, Wiley cyclically bookends her piece by forthrightly echoing the communal importance of the tourist attraction, reinforcing its benefits and mobilising residents to champion its implementation.",
+    "linking_template": "To this end, (author) (adverb) concludes their piece by cyclically returning to the (type of argument) established from the outset, reinforcing ... and mobilising such (type of person) to recognise ...",
+    "linking_example": "To this end, Wiley passionately concludes her piece by cyclically returning to the community-based argument established from the outset, reinforcing the communal importance of the tourist attraction and mobilising such residents to recognise its benefits and champion its implementation."
+  }
+}

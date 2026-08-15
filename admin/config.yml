@@ -1,0 +1,342 @@
+backend:
+  name: github
+  repo: Thatkidzaid/ultimate-aa
+  branch: main
+
+
+media_folder: "media"
+public_folder: "/media"
+
+collections:
+  - name: "core_reference"
+    label: "Core Reference"
+    files:
+      - label: "Adverb / Verb Combination"
+        name: "adverb_verbs"
+        file: "content/adverb-verbs.json"
+        format: "json"
+        fields:
+          - { label: "Positive", name: "positive", widget: "list", field: { label: "Entry", name: "value", widget: "text" } }
+          - { label: "Negative", name: "negative", widget: "list", field: { label: "Entry", name: "value", widget: "text" } }
+          - { label: "Satirical", name: "satirical", widget: "list", field: { label: "Entry", name: "value", widget: "text" } }
+          - { label: "Neutral", name: "neutral", widget: "list", field: { label: "Entry", name: "value", widget: "text" } }
+      - label: "Quick Reference Page"
+        name: "quick_reference"
+        file: "content/quick-reference.json"
+        format: "json"
+        fields:
+          - { label: "Bonus Adverbs / Verbs", name: "bonus", widget: "list", field: { label: "Entry", name: "value", widget: "text" } }
+          - label: "Sentence Starters — Columns"
+            name: "sentence_starters"
+            widget: "list"
+            fields:
+              - { label: "Items", name: "value", widget: "list", field: { label: "Starter", name: "value", widget: "text" } }
+          - label: "Words Like Highlight — Columns"
+            name: "words_like_highlight"
+            widget: "list"
+            fields:
+              - { label: "Items", name: "value", widget: "list", field: { label: "Word", name: "value", widget: "string" } }
+
+  - name: "essay_structure"
+    label: "Essay Structure"
+    files:
+      - label: "Introduction"
+        name: "introduction"
+        file: "content/introduction.json"
+        format: "json"
+        fields:
+          - { label: "Steps", name: "steps", widget: "list", field: { label: "Step", name: "value", widget: "text" } }
+          - { label: "Template Lines", name: "template_lines", widget: "list", field: { label: "Line", name: "value", widget: "text" } }
+          - { label: "Colour-Coded Example Segments", name: "example_segments", widget: "list", field: { label: "Segment", name: "value", widget: "text" } }
+      - label: "Shepherding"
+        name: "shepherding"
+        file: "content/shepherding.json"
+        format: "json"
+        fields:
+          - { label: "Topic Sentence Template", name: "topic_template_lines", widget: "list", field: { label: "Line", name: "value", widget: "text" } }
+          - { label: "Topic Sentence Examples", name: "topic_examples", widget: "list", field: { label: "Example", name: "value", widget: "text" } }
+          - { label: "Types of Argument", name: "argument_types", widget: "list", field: { label: "Argument Type", name: "value", widget: "text" } }
+          - { label: "Linking Sentence Template", name: "linking_template", widget: "text" }
+          - { label: "Linking Sentence Example", name: "linking_example", widget: "text" }
+      - label: "Substantiating"
+        name: "substantiating"
+        file: "content/substantiating.json"
+        format: "json"
+        fields:
+          - { label: "Template Lines", name: "template_lines", widget: "list", field: { label: "Line", name: "value", widget: "text" } }
+          - { label: "Example", name: "example", widget: "text" }
+          - { label: "Linking Sentence Template", name: "linking_template", widget: "text" }
+          - { label: "Linking Sentence Example", name: "linking_example", widget: "text" }
+      - label: "Mobilising"
+        name: "mobilising"
+        file: "content/mobilising.json"
+        format: "json"
+        fields:
+          - label: "Standard Mobilising"
+            name: "standard"
+            widget: "object"
+            fields:
+              - { label: "Topic Sentence Template", name: "topic_template", widget: "text" }
+              - { label: "Topic Sentence Example", name: "topic_example", widget: "text" }
+              - { label: "Linking Sentence Template", name: "linking_template", widget: "text" }
+              - { label: "Linking Sentence Example", name: "linking_example", widget: "text" }
+          - label: "Minimum Effort, Maximum Benefit"
+            name: "minimum_effort"
+            widget: "object"
+            fields:
+              - { label: "Brief Description", name: "description", widget: "text" }
+              - { label: "Topic Sentence Template", name: "topic_template", widget: "text" }
+              - { label: "Topic Sentence Example", name: "topic_example", widget: "text" }
+              - { label: "Linking Sentence Template", name: "linking_template", widget: "text" }
+              - { label: "Linking Sentence Example", name: "linking_example", widget: "text" }
+          - label: "Cyclical Bookending Structure"
+            name: "cyclical_bookending"
+            widget: "object"
+            fields:
+              - { label: "Brief Description", name: "description", widget: "text" }
+              - { label: "Topic Sentence Template", name: "topic_template", widget: "text" }
+              - { label: "Topic Sentence Example", name: "topic_example", widget: "text" }
+              - { label: "Linking Sentence Template", name: "linking_template", widget: "text" }
+              - { label: "Linking Sentence Example", name: "linking_example", widget: "text" }
+      - label: "Conclusion"
+        name: "conclusion"
+        file: "content/conclusion.json"
+        format: "json"
+        fields:
+          - { label: "Template Lines", name: "template_lines", widget: "list", field: { label: "Line", name: "value", widget: "text" } }
+          - { label: "Example", name: "example", widget: "text" }
+
+  - name: "analysis_frameworks"
+    label: "Analysis Frameworks"
+    files:
+      - label: "5 Steps of Analysis"
+        name: "analysis"
+        file: "content/analysis.json"
+        format: "json"
+        fields:
+          - { label: "Steps", name: "steps", widget: "list", field: { label: "Step", name: "value", widget: "text" } }
+          - { label: "Quote Example — Colour Segments", name: "quote_segments", widget: "list", field: { label: "Segment", name: "value", widget: "text" } }
+          - { label: "Image Example — Colour Segments", name: "image_segments", widget: "list", field: { label: "Segment", name: "value", widget: "text" } }
+      - label: "Next Level 5 Steps of Analysis"
+        name: "next_level_analysis"
+        file: "content/next-level-analysis.json"
+        format: "json"
+        fields:
+          - { label: "Steps", name: "steps", widget: "list", field: { label: "Step", name: "value", widget: "text" } }
+          - { label: "Quote Example — Colour Segments", name: "quote_segments", widget: "list", field: { label: "Segment", name: "value", widget: "text" } }
+
+  - name: "persuasive_techniques"
+    label: "Persuasive Techniques"
+    files:
+      - label: "Plosive"
+        name: "plosive"
+        file: "content/techniques/plosive.json"
+        format: "json"
+        fields:
+          - { label: "Definition / Notes", name: "definition_lines", widget: "list", field: { label: "Line", name: "value", widget: "text" } }
+          - label: "Templates"
+            name: "templates"
+            widget: "list"
+            fields:
+              - { label: "Lines", name: "value", widget: "list", field: { label: "Line", name: "value", widget: "text" } }
+          - label: "Examples"
+            name: "examples"
+            widget: "list"
+            fields:
+              - { label: "Lines", name: "value", widget: "list", field: { label: "Line", name: "value", widget: "text" } }
+      - label: "Alliteration"
+        name: "alliteration"
+        file: "content/techniques/alliteration.json"
+        format: "json"
+        fields:
+          - label: "Templates"
+            name: "templates"
+            widget: "list"
+            fields:
+              - { label: "Lines", name: "value", widget: "list", field: { label: "Line", name: "value", widget: "text" } }
+          - label: "Examples"
+            name: "examples"
+            widget: "list"
+            fields:
+              - { label: "Lines", name: "value", widget: "list", field: { label: "Line", name: "value", widget: "text" } }
+      - label: "Anaphora"
+        name: "anaphora"
+        file: "content/techniques/anaphora.json"
+        format: "json"
+        fields:
+          - label: "Templates"
+            name: "templates"
+            widget: "list"
+            fields:
+              - { label: "Lines", name: "value", widget: "list", field: { label: "Line", name: "value", widget: "text" } }
+          - label: "Examples"
+            name: "examples"
+            widget: "list"
+            fields:
+              - { label: "Lines", name: "value", widget: "list", field: { label: "Line", name: "value", widget: "text" } }
+      - label: "Rhetorical Questions"
+        name: "rhetorical_questions"
+        file: "content/techniques/rhetorical-questions.json"
+        format: "json"
+        fields:
+          - label: "Sub-techniques"
+            name: "subtechniques"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Heading", name: "title", widget: "string" }
+              - { label: "Templates", name: "templates", widget: "list", field: { label: "Template", name: "value", widget: "text" } }
+              - { label: "Examples", name: "examples", widget: "list", field: { label: "Example", name: "value", widget: "text" } }
+      - label: "IMAGERY TYPES"
+        name: "imagery_types"
+        file: "content/techniques/imagery-types.json"
+        format: "json"
+        fields:
+          - label: "Sub-techniques"
+            name: "subtechniques"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Heading", name: "title", widget: "string" }
+              - { label: "Templates", name: "templates", widget: "list", field: { label: "Template", name: "value", widget: "text" } }
+              - { label: "Examples", name: "examples", widget: "list", field: { label: "Example", name: "value", widget: "text" } }
+      - label: "Bold Word/Title"
+        name: "bold_word_title"
+        file: "content/techniques/bold-word-title.json"
+        format: "json"
+        fields:
+          - label: "Templates"
+            name: "templates"
+            widget: "list"
+            fields:
+              - { label: "Lines", name: "value", widget: "list", field: { label: "Line", name: "value", widget: "text" } }
+          - label: "Examples"
+            name: "examples"
+            widget: "list"
+            fields:
+              - { label: "Lines", name: "value", widget: "list", field: { label: "Line", name: "value", widget: "text" } }
+      - label: "Anecdotal Evidence"
+        name: "anecdotal_evidence"
+        file: "content/techniques/anecdotal-evidence.json"
+        format: "json"
+        fields:
+          - label: "Templates"
+            name: "templates"
+            widget: "list"
+            fields:
+              - { label: "Lines", name: "value", widget: "list", field: { label: "Line", name: "value", widget: "text" } }
+          - label: "Examples"
+            name: "examples"
+            widget: "list"
+            fields:
+              - { label: "Lines", name: "value", widget: "list", field: { label: "Line", name: "value", widget: "text" } }
+      - label: "Dichotomy"
+        name: "dichotomy"
+        file: "content/techniques/dichotomy.json"
+        format: "json"
+        fields:
+          - label: "Templates"
+            name: "templates"
+            widget: "list"
+            fields:
+              - { label: "Lines", name: "value", widget: "list", field: { label: "Line", name: "value", widget: "text" } }
+      - label: "Statistics"
+        name: "statistics"
+        file: "content/techniques/statistics.json"
+        format: "json"
+        fields:
+          - label: "Templates"
+            name: "templates"
+            widget: "list"
+            fields:
+              - { label: "Lines", name: "value", widget: "list", field: { label: "Line", name: "value", widget: "text" } }
+      - label: "Tonal Shift"
+        name: "tonal_shift"
+        file: "content/techniques/tonal-shift.json"
+        format: "json"
+        fields:
+          - { label: "Tone Lines", name: "tone_lines", widget: "list", field: { label: "Line", name: "value", widget: "text" } }
+      - label: "Connotations"
+        name: "connotations"
+        file: "content/techniques/connotations.json"
+        format: "json"
+        fields:
+          - label: "Templates"
+            name: "templates"
+            widget: "list"
+            fields:
+              - { label: "Lines", name: "value", widget: "list", field: { label: "Line", name: "value", widget: "text" } }
+          - label: "Examples"
+            name: "examples"
+            widget: "list"
+            fields:
+              - { label: "Lines", name: "value", widget: "list", field: { label: "Line", name: "value", widget: "text" } }
+      - label: "Image Analysis"
+        name: "image_analysis"
+        file: "content/techniques/image-analysis.json"
+        format: "json"
+        fields:
+          - { label: "Analysis Points", name: "analysis_points", widget: "list", field: { label: "Point", name: "value", widget: "text" } }
+          - label: "Examples"
+            name: "examples"
+            widget: "list"
+            fields:
+              - { label: "Lines", name: "value", widget: "list", field: { label: "Line", name: "value", widget: "text" } }
+      - label: "Asyndeton"
+        name: "asyndeton"
+        file: "content/techniques/asyndeton.json"
+        format: "json"
+        fields:
+          - label: "Templates"
+            name: "templates"
+            widget: "list"
+            fields:
+              - { label: "Lines", name: "value", widget: "list", field: { label: "Line", name: "value", widget: "text" } }
+      - label: "Semantic Field"
+        name: "semantic_field"
+        file: "content/techniques/semantic-field.json"
+        format: "json"
+        fields:
+          - { label: "Definition / Notes", name: "definition_lines", widget: "list", field: { label: "Line", name: "value", widget: "text" } }
+          - label: "Templates"
+            name: "templates"
+            widget: "list"
+            fields:
+              - { label: "Lines", name: "value", widget: "list", field: { label: "Line", name: "value", widget: "text" } }
+          - label: "Examples"
+            name: "examples"
+            widget: "list"
+            fields:
+              - { label: "Lines", name: "value", widget: "list", field: { label: "Line", name: "value", widget: "text" } }
+      - label: "Auxesis"
+        name: "auxesis"
+        file: "content/techniques/auxesis.json"
+        format: "json"
+        fields:
+          - { label: "Definition / Notes", name: "definition_lines", widget: "list", field: { label: "Line", name: "value", widget: "text" } }
+          - label: "Templates"
+            name: "templates"
+            widget: "list"
+            fields:
+              - { label: "Lines", name: "value", widget: "list", field: { label: "Line", name: "value", widget: "text" } }
+          - label: "Examples"
+            name: "examples"
+            widget: "list"
+            fields:
+              - { label: "Lines", name: "value", widget: "list", field: { label: "Line", name: "value", widget: "text" } }
+      - label: "Syntactic Parallelism"
+        name: "syntactic_parallelism"
+        file: "content/techniques/syntactic-parallelism.json"
+        format: "json"
+        fields:
+          - { label: "Definition / Notes", name: "definition_lines", widget: "list", field: { label: "Line", name: "value", widget: "text" } }
+          - label: "Templates"
+            name: "templates"
+            widget: "list"
+            fields:
+              - { label: "Lines", name: "value", widget: "list", field: { label: "Line", name: "value", widget: "text" } }
+          - label: "Examples"
+            name: "examples"
+            widget: "list"
+            fields:
+              - { label: "Lines", name: "value", widget: "list", field: { label: "Line", name: "value", widget: "text" } }

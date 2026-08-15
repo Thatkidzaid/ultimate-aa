@@ -1,0 +1,28 @@
+{
+  "positive": [
+    "Fervidly espouse/Vehemently endorses/ Zealously assist / Passionately advocate / Glowingly praise – Wholeheartedly support."
+  ],
+  "negative": [
+    "Scathingly Berate - condemn",
+    "Fearfully contemplate – feel threatened while examining a particular situation/action",
+    "Vigorously/Emphatically/Scathingly condemn/Disparagingly denounce – disapprove wholeheartedly and forcefully",
+    "Despairingly condemn – hopelessly disapprove",
+    "Indignantly rebuke – Disapprove of someone unjust.",
+    "Unwaveringly despondent – Fixed in a loss of hope.",
+    "Emphatically/Virulently/Vigorously /Stridently excoriate – criticise severely",
+    "Jarringly Vilify/Undermine – make the opposition immediately disparaged and lose their worth",
+    "Belligerently refute – Aggressively disprove a statement."
+  ],
+  "satirical": [
+    "Candidly deride – Straightforwardly ridicule",
+    "Derisively mock – Completely ridicule someone/something.",
+    "Satirically disparage – Satirically reduce the status of someone."
+  ],
+  "neutral": [
+    "Forthrightly/Authoritatively/Stridently/Harshly assert/declare – Posit strongly",
+    "Emphatically analogising the conflict to a war-like battlefield – clearly compare to a war-like battlefield.",
+    "Systematically outline – Chronologically examine.",
+    "Pointedly accentuate – to emphasise something bad.",
+    "Overtly/Blatantly injudicious – A clearly unwise decision."
+  ]
+}
