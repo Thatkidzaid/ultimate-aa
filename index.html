@@ -1061,7 +1061,7 @@
 <div class="section-block technique-card accent-orange" id="technique-rhetorical-questions">
 <h3 class="technique-heading">Rhetorical Questions</h3>
 <h4 class="subtechnique-heading" data-cms-text="techniques/rhetorical-questions.json::subtechniques.0.title" id="technique-rhetorical-questions-many">Many</h4>
-<div class="callout template"><p data-cms-text="techniques/rhetorical-questions.json::subtechniques.0.templates.0">Rhetorically bombarding (person) with remarks, ranging from ('rhetorical 1') to ('rhetorical 2') to ('rhetorical 3'),</p><p>(author) (adverb verb) the importance of ...</p></div>
+<div class="callout template"><p data-cms-text="techniques/rhetorical-questions.json::subtechniques.0.templates.0">Rhetorically bombarding (person) with remarks, ranging from ('rhetorical 1') to ('rhetorical 2') to ('rhetorical 3'),</p><p data-cms-text="techniques/rhetorical-questions.json::subtechniques.0.templates.1">(author) (adverb verb) the importance of ...</p></div>
 <h3>EXAMPLE:</h3>
 <div class="callout example"><p data-cms-text="techniques/rhetorical-questions.json::subtechniques.0.examples.0">Rhetorically bombarding residents with remarks, ranging from ‘how will you afford a house?’ to ‘are you really trying?’ to ‘don’t your kids need you?’, Khaled pointedly accentuates the importance of easing the housing crisis …</p></div>
 <h4 class="subtechnique-heading" data-cms-text="techniques/rhetorical-questions.json::subtechniques.1.title" id="technique-rhetorical-questions-single">Single</h4>
@@ -1074,15 +1074,15 @@
 <div class="section-block technique-card accent-blue" id="technique-imagery-types">
 <h3 class="technique-heading">IMAGERY TYPES</h3>
 <h4 class="subtechnique-heading" data-cms-text="techniques/imagery-types.json::subtechniques.0.title" id="technique-imagery-types-visceral-cataclysmic-sensory-imagery">Visceral / Cataclysmic / Sensory Imagery</h4>
-<div class="callout template"><p data-cms-text="techniques/imagery-types.json::subtechniques.0.templates.0">Cataclysmically portraying that '...',</p><p>(author) viscerally establishes a war-like battlefield regarding ..., since term 'word' conjures a destructive image of ...</p></div>
+<div class="callout template"><p data-cms-text="techniques/imagery-types.json::subtechniques.0.templates.0">Cataclysmically portraying that '...',</p><p data-cms-text="techniques/imagery-types.json::subtechniques.0.templates.1">(author) viscerally establishes a war-like battlefield regarding ..., since term 'word' conjures a destructive image of ...</p></div>
 <h3>EXAMPLE:</h3>
 <div class="callout example"><p data-cms-text="techniques/imagery-types.json::subtechniques.0.examples.0">Cataclysmically portraying that 'studying VCE is like bleeding every single day in a world of enemies', Mariam establishes a war-like battlefield regarding the struggles of VCE and exams, since the term 'bleeding' conjures a destructive image of blood loss due to the assessments.</p></div>
 <h4 class="subtechnique-heading" data-cms-text="techniques/imagery-types.json::subtechniques.1.title" id="technique-imagery-types-utopic-imagery">Utopic Imagery</h4>
-<div class="callout template"><p data-cms-text="techniques/imagery-types.json::subtechniques.1.templates.0">Utopically presenting that '...',</p><p>(author) euphorically highlights ... given the word '...' creates an image of ...</p></div>
+<div class="callout template"><p data-cms-text="techniques/imagery-types.json::subtechniques.1.templates.0">Utopically presenting that '...',</p><p data-cms-text="techniques/imagery-types.json::subtechniques.1.templates.1">(author) euphorically highlights ... given the word '...' creates an image of ...</p></div>
 <h3>EXAMPLE:</h3>
 <div class="callout example"><p data-cms-text="techniques/imagery-types.json::subtechniques.1.examples.0">Utopically presenting that 'doing pushups will make you fly above the sky', Zohair euphorically highlights the power of exercise on the mind of individuals given the word 'fly' creates an image of elevation.</p></div>
 <h4 class="subtechnique-heading" data-cms-text="techniques/imagery-types.json::subtechniques.2.title" id="technique-imagery-types-dystopic-imagery">Dystopic Imagery</h4>
-<div class="callout template"><p data-cms-text="techniques/imagery-types.json::subtechniques.2.templates.0">In dystopically presenting that '...',</p><p>(author) despondently / melancholically underscores... given the term '...' imbues connotations of ...</p></div>
+<div class="callout template"><p data-cms-text="techniques/imagery-types.json::subtechniques.2.templates.0">In dystopically presenting that '...',</p><p data-cms-text="techniques/imagery-types.json::subtechniques.2.templates.1">(author) despondently / melancholically underscores... given the term '...' imbues connotations of ...</p></div>
 <h3>EXAMPLE:</h3>
 <div class="callout example"><p data-cms-text="techniques/imagery-types.json::subtechniques.2.examples.0">In dystopically presenting that 'chocolate is the silent zombie that murders innocent people', Lebdeh despondently underscores the dangers of consuming junk food given the term 'silent zombie' imbues connotations of destruction and annihilation.</p></div>
 </div>
@@ -1205,19 +1205,45 @@
 <script>
 (() => {
   const cache = new Map();
-  const getPath = (obj, path) => path.split('.').reduce((v, key) => v == null ? undefined : v[Number.isInteger(+key) && String(+key) === key ? +key : key], obj);
+  const SUPABASE_URL = 'https://gsgvejjnorbnizddjnfw.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_A4eEoTqk47CdDo76iJZGqg_w-4qg7fd';
+  const getPath = (obj, path) => path.split('.').reduce((value, key) => value == null ? undefined : value[/^\d+$/.test(key) ? Number(key) : key], obj);
+  const loadBaseline = async (file) => {
+    const response = await fetch(`/content/${file}`, { cache: 'no-store' });
+    if (!response.ok) throw new Error(`Could not load ${file}`);
+    return response.json();
+  };
   const loadFile = async (file) => {
-    if (!cache.has(file)) cache.set(file, fetch('./content/' + file, {cache:'no-store'}).then(r => { if(!r.ok) throw new Error(file); return r.json(); }));
+    if (!cache.has(file)) cache.set(file, (async () => {
+      const baseline = await loadBaseline(file);
+      try {
+        const url = `${SUPABASE_URL}/rest/v1/ala_content?path=eq.${encodeURIComponent(file)}&select=content`;
+        const response = await fetch(url, { cache: 'no-store', headers: { apikey: SUPABASE_KEY } });
+        if (!response.ok) return baseline;
+        const rows = await response.json();
+        return rows.length && rows[0]?.content ? rows[0].content : baseline;
+      } catch { return baseline; }
+    })());
     return cache.get(file);
   };
-  const parse = spec => { const [file, path] = spec.split('::'); return {file, path}; };
-  const applyText = async el => {
-    const {file,path}=parse(el.dataset.cmsText); const data=await loadFile(file); const value=getPath(data,path); if(value !== undefined && value !== null) el.textContent=value;
+  const parse = (spec) => { const [file, path] = spec.split('::'); return { file, path }; };
+  const applyText = async (element) => {
+    const { file, path } = parse(element.dataset.cmsText);
+    const value = getPath(await loadFile(file), path);
+    if (value !== undefined && value !== null) element.textContent = String(value);
   };
-  const applyList = async el => {
-    const {file,path}=parse(el.dataset.cmsList); const data=await loadFile(file); const value=getPath(data,path); if(!Array.isArray(value)) return;
-    const tag = el.tagName.toLowerCase();
-    el.replaceChildren(...value.map(text => { const li=document.createElement('li'); li.textContent=text; return li; }));
+  const applyList = async (element) => {
+    const { file, path } = parse(element.dataset.cmsList);
+    const value = getPath(await loadFile(file), path);
+    if (!Array.isArray(value)) return;
+    const isList = /^(UL|OL)$/.test(element.tagName);
+    const heading = !isList ? element.querySelector(':scope > h3')?.cloneNode(true) : null;
+    const items = value.map((text) => {
+      const node = document.createElement(isList ? 'li' : 'p');
+      node.textContent = String(text);
+      return node;
+    });
+    element.replaceChildren(...(heading ? [heading] : []), ...items);
   };
   Promise.allSettled([
     ...[...document.querySelectorAll('[data-cms-text]')].map(applyText),
