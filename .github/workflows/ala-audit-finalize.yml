@@ -1,0 +1,76 @@
+name: Finalize ALA Audit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/ala-audit-finalize.yml
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Correct renderer and verify audited structure
+        shell: bash
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          import json
+
+          p=Path('admin/index.html')
+          a=p.read_text(encoding='utf-8')
+          old="function renderElement(el){if(el.type==='heading'){const h=document.createElement('div');h.className='doc-heading';h.textContent=el.text;return h}if(el.type==='caption')"
+          new="function renderElement(el){if(el.type==='heading'){const h=document.createElement('div');h.className='doc-heading';h.textContent=el.text;return h}if(el.type==='editableHeading'){const wrap=document.createElement('div');wrap.className='doc-heading';const input=document.createElement('input');input.className='heading-input';input.value=String(getPath(currentData,el.path)??'');input.setAttribute('aria-label','Editable document subheading');input.oninput=()=>{setPath(currentData,el.path,input.value);markDirty()};wrap.appendChild(input);return wrap}if(el.type==='caption')"
+          if old not in a:
+              if "if(el.type==='editableHeading')" not in a:
+                  raise SystemExit('Editable-heading renderer anchor not found')
+          else:
+              a=a.replace(old,new,1)
+          p.write_text(a,encoding='utf-8')
+
+          # Final hard checks on the repository source.
+          admin=Path('admin/index.html').read_text(encoding='utf-8')
+          public=Path('index.html').read_text(encoding='utf-8')
+          netlify=Path('netlify.toml').read_text(encoding='utf-8')
+          adv=json.loads(Path('content/adverb-verbs.json').read_text(encoding='utf-8'))
+          rq=json.loads(Path('content/techniques/rhetorical-questions.json').read_text(encoding='utf-8'))
+          im=json.loads(Path('content/techniques/imagery-types.json').read_text(encoding='utf-8'))
+
+          checks={
+            'admin baseline fallback': 'loadBaseline(file)' in admin and '.maybeSingle()' in admin,
+            'admin structural validation': 'validateSection(sec,data)' in admin,
+            'editable subheading renderer': "if(el.type==='editableHeading')" in admin,
+            'rhetorical title fields': "EH('subtechniques.0.title')" in admin and "EH('subtechniques.1.title')" in admin,
+            'imagery title fields': all(f"EH('subtechniques.{i}.title')" in admin for i in range(3)),
+            'fixed intro steps': "S('steps'),H('Template')" in admin,
+            'public local baseline fallback': 'const loadBaseline = async (file)' in public,
+            'public preserves adverb headings': 'preservedHeading' not in public or "querySelector(':scope > h3')" in public,
+            'rhetorical second line bound': 'subtechniques.0.templates.1' in public,
+            'imagery second lines bound': all(f'subtechniques.{i}.templates.1' in public for i in range(3)),
+            'temporary test removed': not any('Test' in x for x in adv['positive']),
+            'rhetorical template two lines': len(rq['subtechniques'][0]['templates'])==2,
+            'imagery templates two lines each': all(len(x['templates'])==2 for x in im['subtechniques']),
+            'no mutating Netlify build command': 'command =' not in netlify,
+            'old renderer removed': not Path('fix-renderer.js').exists(),
+          }
+          failed=[name for name,ok in checks.items() if not ok]
+          if failed:
+              raise SystemExit('FINAL AUDIT FAILED: '+', '.join(failed))
+          print('FINAL AUDIT PASS:', len(checks), 'repository checks passed')
+          PY
+
+      - name: Remove temporary audit workflows and commit
+        shell: bash
+        run: |
+          git config user.name "ALA Audit Bot"
+          git config user.email "actions@users.noreply.github.com"
+          rm -f .github/workflows/ala-full-audit-fix.yml .github/workflows/ala-audit-finalize.yml
+          git add -A
+          git commit -m "Finalize audited ALA editor"
+          git push
