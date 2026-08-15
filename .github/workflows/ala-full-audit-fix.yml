@@ -1,0 +1,168 @@
+name: ALA Full Audit Fix
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/ala-full-audit-fix.yml
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply audited content and editor fixes
+        shell: bash
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          import json, re
+
+          # Remove the temporary adverb test residue.
+          p = Path('content/adverb-verbs.json')
+          data = json.loads(p.read_text(encoding='utf-8'))
+          value = data['positive'][0]
+          if value.rstrip().endswith('Test'):
+              value = value.rstrip()[:-4].rstrip()
+          data['positive'] = [value]
+          p.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+          # Make each visible two-line template map 1:1 to editable JSON lines.
+          p = Path('content/techniques/rhetorical-questions.json')
+          data = json.loads(p.read_text(encoding='utf-8'))
+          data['subtechniques'][0]['templates'] = [
+              "Rhetorically bombarding (person) with remarks, ranging from ('rhetorical 1') to ('rhetorical 2') to ('rhetorical 3'),",
+              "(author) (adverb verb) the importance of ..."
+          ]
+          p.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+          p = Path('content/techniques/imagery-types.json')
+          data = json.loads(p.read_text(encoding='utf-8'))
+          data['subtechniques'][0]['templates'] = [
+              "Cataclysmically portraying that '...',",
+              "(author) viscerally establishes a war-like battlefield regarding ..., since term 'word' conjures a destructive image of ..."
+          ]
+          data['subtechniques'][1]['templates'] = [
+              "Utopically presenting that '...',",
+              "(author) euphorically highlights ... given the word '...' creates an image of ..."
+          ]
+          data['subtechniques'][2]['templates'] = [
+              "In dystopically presenting that '...',",
+              "(author) despondently / melancholically underscores... given the term '...' imbues connotations of ..."
+          ]
+          p.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+          # Public page: bind the four previously hard-coded second template lines.
+          p = Path('index.html')
+          html = p.read_text(encoding='utf-8')
+          replacements = [
+              ('<p>(author) (adverb verb) the importance of ...</p>', '<p data-cms-text="techniques/rhetorical-questions.json::subtechniques.0.templates.1">(author) (adverb verb) the importance of ...</p>'),
+              ("<p>(author) viscerally establishes a war-like battlefield regarding ..., since term 'word' conjures a destructive image of ...</p>", "<p data-cms-text=\"techniques/imagery-types.json::subtechniques.0.templates.1\">(author) viscerally establishes a war-like battlefield regarding ..., since term 'word' conjures a destructive image of ...</p>"),
+              ("<p>(author) euphorically highlights ... given the word '...' creates an image of ...</p>", "<p data-cms-text=\"techniques/imagery-types.json::subtechniques.1.templates.1\">(author) euphorically highlights ... given the word '...' creates an image of ...</p>"),
+              ("<p>(author) despondently / melancholically underscores... given the term '...' imbues connotations of ...</p>", "<p data-cms-text=\"techniques/imagery-types.json::subtechniques.2.templates.1\">(author) despondently / melancholically underscores... given the term '...' imbues connotations of ...</p>")
+          ]
+          for old, new in replacements:
+              if old not in html:
+                  raise SystemExit('Expected public binding text was not found: ' + old[:70])
+              html = html.replace(old, new, 1)
+
+          loader_pattern = re.compile(r'\n<script>\n\(\(\) => \{\n  const cache = new Map\(\);.*?\n\}\)\(\);\n</script>', re.S)
+          loader = r'''<script>
+          (() => {
+            const cache = new Map();
+            const SUPABASE_URL = 'https://gsgvejjnorbnizddjnfw.supabase.co';
+            const SUPABASE_KEY = 'sb_publishable_A4eEoTqk47CdDo76iJZGqg_w-4qg7fd';
+            const getPath = (obj, path) => path.split('.').reduce((value, key) => value == null ? undefined : value[/^\d+$/.test(key) ? Number(key) : key], obj);
+            const loadBaseline = async (file) => {
+              const response = await fetch(`/content/${file}`, { cache: 'no-store' });
+              if (!response.ok) throw new Error(`Could not load ${file}`);
+              return response.json();
+            };
+            const loadFile = async (file) => {
+              if (!cache.has(file)) cache.set(file, (async () => {
+                const baseline = await loadBaseline(file);
+                try {
+                  const url = `${SUPABASE_URL}/rest/v1/ala_content?path=eq.${encodeURIComponent(file)}&select=content`;
+                  const response = await fetch(url, { cache: 'no-store', headers: { apikey: SUPABASE_KEY } });
+                  if (!response.ok) return baseline;
+                  const rows = await response.json();
+                  return rows.length && rows[0]?.content ? rows[0].content : baseline;
+                } catch { return baseline; }
+              })());
+              return cache.get(file);
+            };
+            const parse = (spec) => { const [file, path] = spec.split('::'); return { file, path }; };
+            const applyText = async (element) => {
+              const { file, path } = parse(element.dataset.cmsText);
+              const value = getPath(await loadFile(file), path);
+              if (value !== undefined && value !== null) element.textContent = String(value);
+            };
+            const applyList = async (element) => {
+              const { file, path } = parse(element.dataset.cmsList);
+              const value = getPath(await loadFile(file), path);
+              if (!Array.isArray(value)) return;
+              const isList = /^(UL|OL)$/.test(element.tagName);
+              const heading = !isList ? element.querySelector(':scope > h3')?.cloneNode(true) : null;
+              const items = value.map((text) => {
+                const node = document.createElement(isList ? 'li' : 'p');
+                node.textContent = String(text);
+                return node;
+              });
+              element.replaceChildren(...(heading ? [heading] : []), ...items);
+            };
+            Promise.allSettled([
+              ...[...document.querySelectorAll('[data-cms-text]')].map(applyText),
+              ...[...document.querySelectorAll('[data-cms-list]')].map(applyList)
+            ]);
+          })();
+          </script>'''
+          html, count = loader_pattern.subn(lambda m: '\n' + loader, html)
+          if count != 1:
+              raise SystemExit(f'Expected one public CMS loader; found {count}')
+          p.write_text(html, encoding='utf-8')
+
+          # Admin: exact canonical structure, local baseline fallback, and pre-publish validation.
+          p = Path('admin/index.html')
+          a = p.read_text(encoding='utf-8')
+          a = a.replace('.doc-heading:first-child{margin-top:0}.editor-caption', '.doc-heading:first-child{margin-top:0}.heading-input{width:100%;border:0;outline:0;background:transparent;font:inherit;font-weight:inherit;letter-spacing:inherit;color:inherit;padding:0}.editor-caption')
+          a = a.replace('Press <strong>Publish to site</strong> to update the live document. Fixed document lines cannot be added or removed; true lists can.', 'Press <strong>Publish to site</strong> to update the live document. Fields appear in the same order as the public document; fixed structures stay fixed.')
+          a = a.replace("const H=t=>({type:'heading',text:t}),C=t=>({type:'caption',text:t}),F=(path,label='')=>({type:'field',path,label}),S=(path,label='')=>({type:'segments',path,label}),L=(path,label='')=>({type:'list',path,label}),COL=paths=>({type:'columns',paths});", "const H=t=>({type:'heading',text:t}),EH=path=>({type:'editableHeading',path}),C=t=>({type:'caption',text:t}),F=(path,label='')=>({type:'field',path,label}),S=(path,label='')=>({type:'segments',path,label}),L=(path,label='')=>({type:'list',path,label}),COL=paths=>({type:'columns',paths});")
+          a = a.replace("{id:'introduction',label:'INTRODUCTION',file:'introduction.json',elements:[H('5 Steps of Introduction'),L('steps'),H('Template'),S('template_lines'),H('EXAMPLE:'),S('example_segments')]}", "{id:'introduction',label:'INTRODUCTION',file:'introduction.json',elements:[H('5 Steps of Introduction'),S('steps'),H('Template'),S('template_lines'),H('EXAMPLE:'),S('example_segments')]}")
+          a = a.replace("{id:'analysis',label:'5 STEPS OF ANALYSIS',file:'analysis.json',elements:[L('steps'),H('QUOTE ANALYSIS EXAMPLE:'),S('quote_segments'),H('IMAGE ANALYSIS EXAMPLE:'),S('image_segments')]}", "{id:'analysis',label:'5 STEPS OF ANALYSIS',file:'analysis.json',elements:[S('steps'),H('QUOTE ANALYSIS EXAMPLE:'),S('quote_segments'),H('IMAGE ANALYSIS EXAMPLE:'),S('image_segments')]}")
+          a = a.replace("{id:'next-analysis',label:'NEXT LEVEL 5 STEPS OF ANALYSIS',file:'next-level-analysis.json',elements:[L('steps'),H('QUOTE ANALYSIS EXAMPLE:'),S('quote_segments')]}", "{id:'next-analysis',label:'NEXT LEVEL 5 STEPS OF ANALYSIS',file:'next-level-analysis.json',elements:[S('steps'),H('QUOTE ANALYSIS EXAMPLE:'),S('quote_segments')]}")
+          a = a.replace("{id:'rhetorical',label:'Rhetorical Questions',file:'techniques/rhetorical-questions.json',sub:true,elements:[H('Many'),C('Template'),F('subtechniques.0.templates.0'),H('EXAMPLE:'),F('subtechniques.0.examples.0'),H('Single'),C('Template'),F('subtechniques.1.templates.0'),H('EXAMPLE 1:'),F('subtechniques.1.examples.0'),H('EXAMPLE 2:'),F('subtechniques.1.examples.1')]}", "{id:'rhetorical',label:'Rhetorical Questions',file:'techniques/rhetorical-questions.json',sub:true,elements:[EH('subtechniques.0.title'),C('Template'),S('subtechniques.0.templates'),H('EXAMPLE:'),F('subtechniques.0.examples.0'),EH('subtechniques.1.title'),C('Template'),S('subtechniques.1.templates'),H('EXAMPLE 1:'),F('subtechniques.1.examples.0'),H('EXAMPLE 2:'),F('subtechniques.1.examples.1')]}")
+          a = a.replace("{id:'imagery',label:'IMAGERY TYPES',file:'techniques/imagery-types.json',sub:true,elements:[H('Visceral / Cataclysmic / Sensory Imagery'),C('Template'),F('subtechniques.0.templates.0'),H('EXAMPLE:'),F('subtechniques.0.examples.0'),H('Utopic Imagery'),C('Template'),F('subtechniques.1.templates.0'),H('EXAMPLE:'),F('subtechniques.1.examples.0'),H('Dystopic Imagery'),C('Template'),F('subtechniques.2.templates.0'),H('EXAMPLE:'),F('subtechniques.2.examples.0')]}", "{id:'imagery',label:'IMAGERY TYPES',file:'techniques/imagery-types.json',sub:true,elements:[EH('subtechniques.0.title'),C('Template'),S('subtechniques.0.templates'),H('EXAMPLE:'),F('subtechniques.0.examples.0'),EH('subtechniques.1.title'),C('Template'),S('subtechniques.1.templates'),H('EXAMPLE:'),F('subtechniques.1.examples.0'),EH('subtechniques.2.title'),C('Template'),S('subtechniques.2.templates'),H('EXAMPLE:'),F('subtechniques.2.examples.0')]}")
+
+          rpc_old = "async function rpc(name,args={}){const {data,error}=await sb.rpc(name,args);if(error)throw error;return data}"
+          rpc_new = """async function rpc(name,args={}){const {data,error}=await sb.rpc(name,args);if(error)throw error;return data}\nasync function loadBaseline(file){const response=await fetch(`/content/${file}`,{cache:'no-store'});if(!response.ok)throw new Error(`Baseline content missing: ${file}`);return response.json()}\nfunction elementPaths(sec){const out=[];for(const el of sec.elements){if(['field','segments','list','editableHeading'].includes(el.type))out.push({path:el.path,type:el.type});if(el.type==='columns')for(const path of el.paths)out.push({path,type:'list'})}return out}\nfunction validateSection(sec,data){const errors=[];for(const item of elementPaths(sec)){const value=getPath(data,item.path);if(value===undefined||value===null){errors.push(`${item.path} is missing`);continue}if(['segments','list'].includes(item.type)&&!Array.isArray(value))errors.push(`${item.path} must be a list`);if(['field','editableHeading'].includes(item.type)&&typeof value==='object')errors.push(`${item.path} must be text`)}if(errors.length)throw new Error(`Content structure mismatch in ${sec.label}: ${errors.join('; ')}`);return true}"""
+          if rpc_old not in a: raise SystemExit('Admin RPC anchor not found')
+          a = a.replace(rpc_old, rpc_new, 1)
+
+          load_old = "async function loadSection(sec){currentSection=sec;setStatus($('#saveStatus'),'Loading…');document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.id===sec.id));try{const {data,error}=await sb.from('ala_content').select('content,updated_at,updated_by').eq('path',sec.file).single();if(error)throw error;currentData=structuredClone(data.content);$('#sectionTitle').textContent=sec.label;const ey=$('#sectionEyebrow');if(sec.sub){ey.textContent='PERSUASIVE TECHNIQUE SETUPS';ey.classList.remove('hidden')}else ey.classList.add('hidden');$('#sectionDesc').textContent=data.updated_at?'Last published '+new Date(data.updated_at).toLocaleString():'Edit the fields below.';renderSection();setStatus($('#saveStatus'),'Loaded')}catch(e){$('#form').innerHTML='<p class=\"error\">Could not load this section.</p>';setStatus($('#saveStatus'),'Load failed','error')}}"
+          load_new = """async function loadSection(sec){currentSection=sec;setStatus($('#saveStatus'),'Loading…');document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.id===sec.id));try{const baseline=await loadBaseline(sec.file);const {data,error}=await sb.from('ala_content').select('content,updated_at,updated_by').eq('path',sec.file).maybeSingle();if(error)throw error;currentData=structuredClone(data?.content??baseline);validateSection(sec,currentData);$('#sectionTitle').textContent=sec.label;const ey=$('#sectionEyebrow');if(sec.sub){ey.textContent='PERSUASIVE TECHNIQUE SETUPS';ey.classList.remove('hidden')}else ey.classList.add('hidden');$('#sectionDesc').textContent=data?.updated_at?'Last published '+new Date(data.updated_at).toLocaleString():'Using the current public-document baseline.';renderSection();setStatus($('#saveStatus'),'Loaded')}catch(e){$('#form').innerHTML=`<p class=\"error\">${String(e.message||'Could not load this section.')}</p>`;setStatus($('#saveStatus'),'Audit check failed','error');$('#publishBtn').disabled=true}}"""
+          if load_old not in a: raise SystemExit('Admin loadSection anchor not found')
+          a = a.replace(load_old, load_new, 1)
+          a = a.replace("function renderSection(){const root=$('#form');root.innerHTML='';for(const el of currentSection.elements)root.appendChild(renderElement(el))}", "function renderSection(){const root=$('#form');root.innerHTML='';for(const el of currentSection.elements)root.appendChild(renderElement(el));$('#publishBtn').disabled=false}")
+          a = a.replace("if(el.type==='heading'){const h=document.createElement('div');h.className='doc-heading';h.textContent=el.text;return h}\n  if(el.type==='caption')", "if(el.type==='heading'){const h=document.createElement('div');h.className='doc-heading';h.textContent=el.text;return h}\n  if(el.type==='editableHeading'){const wrap=document.createElement('div');wrap.className='doc-heading';const input=document.createElement('input');input.className='heading-input';input.value=String(getPath(currentData,el.path)??'');input.setAttribute('aria-label','Editable document subheading');input.oninput=()=>{setPath(currentData,el.path,input.value);markDirty()};wrap.appendChild(input);return wrap}\n  if(el.type==='caption')")
+          a = a.replace("if(!currentSection||!currentData)return;$('#publishBtn').disabled=true;setStatus($('#saveStatus'),'Publishing…');try{", "if(!currentSection||!currentData)return;try{validateSection(currentSection,currentData)}catch(e){setStatus($('#saveStatus'),e.message,'error');return}$('#publishBtn').disabled=true;setStatus($('#saveStatus'),'Publishing…');try{")
+          p.write_text(a, encoding='utf-8')
+
+          # No build-time rewriting; the source itself is now correct.
+          Path('netlify.toml').write_text('''[build]\n  publish = "."\n\n[[headers]]\n  for = "/admin/*"\n  [headers.values]\n    X-Robots-Tag = "noindex, nofollow"\n\n[[headers]]\n  for = "/content/*"\n  [headers.values]\n    Cache-Control = "no-cache, no-store, must-revalidate"\n''', encoding='utf-8')
+          Path('fix-renderer.js').unlink(missing_ok=True)
+          PY
+
+      - name: Commit repair
+        shell: bash
+        run: |
+          git config user.name "ALA Audit Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git commit -m "Complete ALA editor content audit and repair"
+          git push
