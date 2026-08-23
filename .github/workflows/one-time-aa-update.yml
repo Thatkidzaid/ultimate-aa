@@ -1,0 +1,74 @@
+name: One-time Ultimate AA guide update
+
+on:
+  push:
+    paths:
+      - '.github/workflows/one-time-aa-update.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update-guide:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Apply approved guide changes
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import json
+
+          # Public/front-side heading + fallback image-analysis example.
+          index_path = Path('index.html')
+          index = index_path.read_text(encoding='utf-8')
+          old_heading = '<h3>5 Steps of Introduction</h3>'
+          new_heading = '<h3>4 Steps of Introduction</h3>'
+          if old_heading not in index:
+              raise SystemExit('Public introduction heading not found')
+          index = index.replace(old_heading, new_heading, 1)
+
+          old_example = '''<div class="callout example colour-coded-callout"><p class="colour-coded-example"><span class="highlight analysis-1" data-cms-text="analysis.json::image_segments.0">By presenting a compositionally dominating image of a child with X-crossed eyes staring blankly at the screen,</span> <span class="highlight analysis-2" data-cms-text="analysis.json::image_segments.1">Abdallah seeks to position parents – who potentially want their kids to be focused and not staring sporadically –</span> <span class="highlight analysis-3" data-cms-text="analysis.json::image_segments.2">into despairingly condemning</span> <span class="highlight analysis-neutral" data-cms-text="analysis.json::image_segments.3">their action of providing their child with an IPAD</span> <span class="highlight analysis-4" data-cms-text="analysis.json::image_segments.4">since the X-crossed eyes represents a cataclysmic image of destruction.</span> <span class="highlight analysis-5" data-cms-text="analysis.json::image_segments.5">Therefore, such parents are influenced to reconsider their perspective on using the IPAD for their child.</span></p></div>'''
+          new_example = '''<div class="callout example colour-coded-callout"><p class="colour-coded-example"><span class="highlight analysis-1" data-cms-text="analysis.json::image_segments.0">By presenting a compositionally dominating image of a visibly exhausted student surrounded by piles of unfinished schoolwork,</span> <span class="highlight analysis-2" data-cms-text="analysis.json::image_segments.1">the author seeks to position parents</span> <span class="highlight analysis-3" data-cms-text="analysis.json::image_segments.2">into feeling concerned</span> <span class="highlight analysis-neutral" data-cms-text="analysis.json::image_segments.3">about excessive academic pressure,</span> <span class="highlight analysis-4" data-cms-text="analysis.json::image_segments.4">since the student’s slumped posture and overwhelming surroundings represent the damaging consequences of relentless expectations.</span> <span class="highlight analysis-5" data-cms-text="analysis.json::image_segments.5">Therefore, such parents are influenced to reconsider the pressure they place upon young people.</span></p></div>'''
+          if old_example not in index:
+              raise SystemExit('Public image-analysis fallback example not found')
+          index = index.replace(old_example, new_example, 1)
+          index_path.write_text(index, encoding='utf-8')
+
+          # Admin-side fixed heading.
+          admin_path = Path('admin/index.html')
+          admin = admin_path.read_text(encoding='utf-8')
+          old_admin = "H('5 Steps of Introduction')"
+          new_admin = "H('4 Steps of Introduction')"
+          if old_admin not in admin:
+              raise SystemExit('Admin introduction heading not found')
+          admin = admin.replace(old_admin, new_admin, 1)
+          admin_path.write_text(admin, encoding='utf-8')
+
+          # GitHub baseline content used by both the public site and admin editor.
+          analysis_path = Path('content/analysis.json')
+          data = json.loads(analysis_path.read_text(encoding='utf-8'))
+          data['image_segments'] = [
+              'By presenting a compositionally dominating image of a visibly exhausted student surrounded by piles of unfinished schoolwork,',
+              'the author seeks to position parents',
+              'into feeling concerned',
+              'about excessive academic pressure,',
+              'since the student’s slumped posture and overwhelming surroundings represent the damaging consequences of relentless expectations.',
+              'Therefore, such parents are influenced to reconsider the pressure they place upon young people.'
+          ]
+          analysis_path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          PY
+
+      - name: Commit approved changes
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/one-time-aa-update.yml
+          git add index.html admin/index.html content/analysis.json
+          git commit -m "Update introduction steps and image analysis example"
+          git push
