@@ -1,0 +1,69 @@
+name: One-time current Ultimate AA PDF
+
+on:
+  push:
+    paths:
+      - '.github/workflows/one-time-current-pdf.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  export-pdf:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare PDF-only front page
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          s = s.replace('Welcome ♥', '')
+          p.write_text(s, encoding='utf-8')
+          PY
+
+      - name: Start local site
+        run: |
+          python3 -m http.server 8000 >/tmp/ultimate-aa-http.log 2>&1 &
+          sleep 2
+
+      - name: Export front side PDF
+        shell: bash
+        run: |
+          CHROME=$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser)
+          if [ -z "$CHROME" ]; then
+            echo "Chrome/Chromium not found"
+            exit 1
+          fi
+          "$CHROME" \
+            --headless \
+            --disable-gpu \
+            --no-sandbox \
+            --no-pdf-header-footer \
+            --virtual-time-budget=10000 \
+            --print-to-pdf="Ultimate AA Doc.pdf" \
+            http://127.0.0.1:8000/
+          test -s "Ultimate AA Doc.pdf"
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ultimate-aa-doc-pdf
+          path: Ultimate AA Doc.pdf
+          if-no-files-found: error
+
+      - name: Record run and remove workflow
+        shell: bash
+        run: |
+          git checkout -- index.html
+          echo "${{ github.run_id }}" > current-pdf-run-id.txt
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/one-time-current-pdf.yml
+          git add current-pdf-run-id.txt
+          git commit -m "Package current Ultimate AA PDF"
+          git push
