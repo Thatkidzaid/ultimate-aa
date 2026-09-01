@@ -1,0 +1,182 @@
+name: Hallab Education ALA ZIP export
+
+on:
+  push:
+    branches:
+      - hallab-theme-export
+    paths:
+      - '.github/workflows/hallab-theme-export.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  build-zip:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out project
+        uses: actions/checkout@v4
+
+      - name: Apply Hallab Education theme to export copy
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          PUBLIC_CSS = r'''
+          <style id="hallab-education-theme">
+          :root {
+            --hallab-navy:#12263d;
+            --hallab-navy-2:#0b1c2e;
+            --hallab-gold:#c4a06b;
+            --hallab-gold-soft:#eadbc4;
+            --hallab-cream:#f7f4ef;
+            --hallab-surface:#ffffff;
+            --hallab-line:#dfe3e8;
+            --hallab-muted:#697586;
+            --page:#f4f6f8;
+            --page-deep:#eef1f4;
+            --paper:#ffffff;
+            --paper-soft:#fafbfc;
+            --ink:#16283d;
+            --ink-soft:#647083;
+            --line:#dfe3e8;
+            --line-strong:#c9d0d8;
+            --gold:#c4a06b;
+            --gold-deep:#967447;
+            --gold-soft:#f1e7d7;
+            --shadow:0 18px 45px rgba(20,39,61,.08),0 2px 8px rgba(20,39,61,.045);
+          }
+          html{background:var(--page)!important}
+          body{
+            background:linear-gradient(180deg,#f8f9fb 0%,#f3f5f7 45%,#edf0f3 100%)!important;
+            color:var(--ink)!important;
+          }
+          .hallab-brandbar{
+            position:sticky;top:0;z-index:2000;height:76px;padding:0 30px;
+            display:flex;align-items:center;justify-content:space-between;gap:20px;
+            background:rgba(255,255,255,.97);backdrop-filter:blur(16px);
+            border-bottom:1px solid rgba(18,38,61,.10);box-shadow:0 6px 24px rgba(18,38,61,.055)
+          }
+          .hallab-brandlockup{display:flex;align-items:center;gap:20px;min-width:0}
+          .hallab-brandbar img{display:block;width:min(300px,34vw);height:52px;object-fit:contain;object-position:left center}
+          .hallab-brand-divider{width:1px;height:34px;background:#d8dde3}
+          .hallab-brandtag{font-size:.84rem;letter-spacing:.015em;color:#657181;font-style:italic;white-space:nowrap}
+          .hallab-course{font-size:.72rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:#8e724d;white-space:nowrap}
+
+          .hallab-hero{
+            position:relative;overflow:hidden;margin:0 0 22px;padding:clamp(32px,5vw,62px);
+            min-height:330px;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(240px,.65fr);gap:42px;align-items:center;
+            color:#fff;background:
+              radial-gradient(circle at 85% 20%,rgba(196,160,107,.23),transparent 29rem),
+              linear-gradient(115deg,#0b1c2e 0%,#132d49 62%,#1f3d5a 100%);
+            border:1px solid rgba(196,160,107,.4);border-radius:22px;box-shadow:0 22px 55px rgba(11,28,46,.18)
+          }
+          .hallab-hero:after{content:"";position:absolute;right:-75px;top:-110px;width:330px;height:330px;border:1px solid rgba(196,160,107,.22);transform:rotate(36deg);border-radius:42px}
+          .hallab-hero-copy{position:relative;z-index:1}
+          .hallab-eyebrow{margin:0 0 18px;font-size:.75rem;font-weight:850;letter-spacing:.15em;text-transform:uppercase;color:#d9bd91}
+          .hallab-hero h1{margin:0!important;padding:0!important;border:0!important;background:none!important;box-shadow:none!important;color:#fff!important;font-family:Georgia,'Times New Roman',serif!important;font-size:clamp(2.7rem,6vw,5.2rem)!important;font-weight:500!important;letter-spacing:-.045em!important;line-height:.98!important}
+          .hallab-hero h1 span{display:block;color:#d6b47e}
+          .hallab-hero p{margin:22px 0 0;max-width:660px;color:rgba(255,255,255,.82);font-size:clamp(1rem,1.7vw,1.17rem);line-height:1.7}
+          .hallab-hero-mark{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;padding:30px}
+          .hallab-hero-mark img{width:min(420px,100%);max-height:190px;object-fit:contain;filter:drop-shadow(0 14px 30px rgba(0,0,0,.16))}
+
+          main{width:min(1200px,calc(100% - 46px))!important;padding-top:26px!important}
+          section{background:#fff!important;border:1px solid #dfe3e8!important;border-radius:20px!important;box-shadow:var(--shadow)!important}
+          h1,h2,.section-title{
+            color:#fff!important;border:1px solid #29435e!important;border-left:6px solid var(--hallab-gold)!important;
+            background:linear-gradient(105deg,#10273f 0%,#183650 68%,#24445e 100%)!important;
+            box-shadow:inset 0 1px 0 rgba(255,255,255,.08)!important
+          }
+          h3{color:#18304a!important}
+          .panel{background:linear-gradient(180deg,#fff,#fafbfc)!important;border-color:#dfe3e8!important;box-shadow:0 7px 22px rgba(18,38,61,.045)!important}
+          .panel h3{border-bottom-color:var(--hallab-gold)!important}
+          .technique-card{background:#fff!important;border-color:#dfe3e8!important;box-shadow:0 10px 30px rgba(18,38,61,.06)!important}
+          .technique-heading{color:#152a41!important}
+          .separator{background:linear-gradient(90deg,transparent,#c4a06b 16%,#c4a06b 84%,transparent)!important}
+          .site-navigation{
+            top:76px!important;height:calc(100vh - 76px)!important;
+            background:linear-gradient(180deg,#10273f 0%,#0b1c2e 100%)!important;
+            border-right:1px solid rgba(196,160,107,.25)!important;box-shadow:18px 0 44px rgba(11,28,46,.16)!important
+          }
+          .nav-header{border-bottom-color:rgba(255,255,255,.11)!important}
+          .nav-title{color:#f8f5f0!important;font-family:Georgia,'Times New Roman',serif!important;letter-spacing:.02em}
+          .nav-link,.nav-group summary{color:rgba(255,255,255,.75)!important}
+          .nav-link:hover,.nav-link.is-active,.nav-group summary:hover{color:#fff!important;background:rgba(196,160,107,.13)!important}
+          .nav-link.is-active{box-shadow:inset 3px 0 0 #c4a06b!important}
+          .menu-toggle{top:91px!important;background:#10273f!important;border-color:#c4a06b!important;box-shadow:0 8px 22px rgba(11,28,46,.18)!important}
+          .menu-toggle span{background:#fff!important}
+          .hallab-footer{margin:30px auto 0;padding:25px;text-align:center;color:#7a8492;font-size:.82rem}
+          .hallab-footer strong{color:#22384f}
+          @media(max-width:850px){
+            .hallab-brandbar{height:68px;padding:0 18px}.hallab-brandbar img{height:43px;width:min(245px,60vw)}
+            .hallab-brand-divider,.hallab-brandtag{display:none}.hallab-course{font-size:.64rem}
+            .site-navigation{top:68px!important;height:calc(100vh - 68px)!important}.menu-toggle{top:82px!important}
+            main{width:min(100% - 24px,1200px)!important;padding-top:16px!important}
+            .hallab-hero{grid-template-columns:1fr;min-height:auto;padding:32px 26px;gap:18px}.hallab-hero-mark{justify-content:flex-start;padding:0}.hallab-hero-mark img{width:min(300px,75%);max-height:115px}
+          }
+          @media(max-width:520px){.hallab-brandtag,.hallab-course{display:none}.hallab-brandbar{justify-content:center}.hallab-brandbar img{width:min(280px,75vw)}.hallab-hero h1{font-size:2.7rem!important}}
+          @media print{.hallab-brandbar,.hallab-hero,.hallab-footer{display:none!important}.site-navigation,.menu-toggle{display:none!important}}
+          </style>
+          '''
+
+          PUBLIC_BAR = r'''<header class="hallab-brandbar" aria-label="Hallab Education brand header"><div class="hallab-brandlockup"><img src="assets/hallab-logo.png" alt="Hallab Education"><span class="hallab-brand-divider" aria-hidden="true"></span><span class="hallab-brandtag">Better Resources. Higher Results.</span></div><div class="hallab-course">VCE English · Analysing Argument</div></header>'''
+          PUBLIC_HERO = r'''<section class="hallab-hero" aria-label="Ultimate AA guide"><div class="hallab-hero-copy"><div class="hallab-eyebrow">VCE English · Analysing Argument</div><h1>Ultimate AA <span>Key To Success</span></h1><p>Your complete Analysing Argument reference — preserving the proven structures, technique setups, examples and colour-coded analysis system of the original guide.</p></div><div class="hallab-hero-mark"><img src="assets/hallab-logo.png" alt="Hallab Education"></div></section>'''
+
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace('<title>Ultimate AA Key To Success</title>','<title>Hallab Education | Ultimate AA Key To Success</title>')
+          s=s.replace('<title>Ultimate AA Key To Sucess</title>','<title>Hallab Education | Ultimate AA Key To Success</title>')
+          s=s.replace('<div class="nav-title">Ultimate AA</div>','<div class="nav-title">Hallab Education · Ultimate AA</div>')
+          s=s.replace('</head>',PUBLIC_CSS+'\n</head>',1)
+          s=re.sub(r'(<body[^>]*>)',r'\1'+PUBLIC_BAR,s,count=1)
+          s=s.replace('<main>','<main>'+PUBLIC_HERO,1)
+          s=s.replace('</main>','<div class="hallab-footer"><strong>Hallab Education</strong> · Better Resources. Higher Results.</div></main>',1)
+          p.write_text(s,encoding='utf-8')
+
+          ADMIN_CSS = r'''
+          <style id="hallab-admin-theme">
+          :root{--hallab-navy:#12263d;--hallab-navy2:#0b1c2e;--hallab-gold:#c4a06b;--hallab-cream:#f6f4f0}
+          body{background:#f3f5f7!important;color:#172a40!important}
+          .hallab-admin-brand{height:68px;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 24px;background:linear-gradient(105deg,#10273f,#183650);border-bottom:2px solid #c4a06b;box-shadow:0 8px 24px rgba(11,28,46,.16);position:relative;z-index:9999}
+          .hallab-admin-brand img{height:45px;width:min(280px,54vw);object-fit:contain;object-position:left center;filter:brightness(0) invert(1);opacity:.96}
+          .hallab-admin-brand span{color:#d9bd91;font-size:.72rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
+          button,.button,[type=submit]{border-radius:9px!important}
+          button.primary,.primary,[type=submit]{background:#12263d!important;border-color:#12263d!important;color:#fff!important}
+          button.primary:hover,.primary:hover,[type=submit]:hover{background:#0b1c2e!important}
+          input,textarea,select{border-color:#cfd6dd!important;border-radius:9px!important}
+          input:focus,textarea:focus,select:focus{outline-color:#c4a06b!important;border-color:#c4a06b!important}
+          header{border-color:#d9dde2!important}
+          @media(max-width:640px){.hallab-admin-brand{height:60px;padding:0 14px}.hallab-admin-brand img{height:39px}.hallab-admin-brand span{display:none}}
+          </style>
+          '''
+          ADMIN_BAR = r'''<div class="hallab-admin-brand"><img src="../assets/hallab-logo.png" alt="Hallab Education"><span>Ultimate AA Editor</span></div>'''
+          a=Path('admin/index.html')
+          if a.exists():
+              t=a.read_text(encoding='utf-8')
+              t=t.replace('</head>',ADMIN_CSS+'\n</head>',1)
+              t=re.sub(r'(<body[^>]*>)',r'\1'+ADMIN_BAR,t,count=1)
+              t=t.replace('<title>Ultimate AA Editor</title>','<title>Hallab Education | Ultimate AA Editor</title>')
+              a.write_text(t,encoding='utf-8')
+
+          Path('HALLAB-README.txt').write_text('Hallab Education themed Ultimate AA export. Upload the contents of this folder to Netlify. The public guide remains index.html and the editor remains /admin/. The existing content JSON and CMS/Supabase behaviour are preserved. Add the supplied transparent Hallab logo at assets/hallab-logo.png before deployment.\n',encoding='utf-8')
+          PY
+
+      - name: Prepare Netlify-ready folder
+        shell: bash
+        run: |
+          mkdir -p hallab-export/assets
+          cp index.html netlify.toml HALLAB-README.txt hallab-export/
+          cp -R admin content hallab-export/
+          if [ -f README.md ]; then cp README.md hallab-export/; fi
+          if [ -f SETUP.md ]; then cp SETUP.md hallab-export/; fi
+          cd hallab-export
+          zip -r ../Hallab-Education-Ultimate-AA.zip . >/dev/null
+
+      - name: Upload ZIP artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: hallab-education-ultimate-aa
+          path: Hallab-Education-Ultimate-AA.zip
+          if-no-files-found: error
