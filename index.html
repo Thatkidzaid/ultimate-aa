@@ -4,7 +4,7 @@
 <html lang="en"><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="light" name="color-scheme"/>
-<title>Ultimate AA Key To Success</title>
+<title>Ultimate Key To Success</title>
 <meta content="#d4a42f" name="theme-color"/>
 
 
@@ -294,961 +294,551 @@
       border-left: 4px solid var(--accent);
       border-radius: 7px;
       background: var(--accent-soft);
-      color: #27303c !important;
+      color: #27303b !important;
       font-size: .94rem !important;
     }
-    .technique-card .callout { margin-left: 0; margin-right: 0; }
+    .technique-card p { margin-bottom: 11px; }
+    .technique-card > p:last-child { margin-bottom: 0; }
+    .mini-analysis {
+      margin: 14px 0 0;
+      padding: 15px 16px 13px;
+      border: 1px solid #e2dacb;
+      border-radius: 10px;
+      background: #fcfaf6;
+      color: #404955;
+      font-size: .91rem;
+      line-height: 1.62;
+    }
 
-    /* Off-canvas navigation */
-    .menu-toggle {
-      position: fixed;
-      z-index: 1100;
-      top: 17px;
-      left: 17px;
-      display: grid;
-      place-content: center;
-      gap: 5px;
-      width: 48px;
-      height: 48px;
-      padding: 0;
-      border: 1px solid rgba(138,101,20,.38);
-      border-radius: 14px;
-      background: rgba(255,254,250,.96);
-      box-shadow: 0 10px 28px rgba(47,39,27,.16);
-      cursor: pointer;
-      -webkit-tap-highlight-color: transparent;
+    /* Header and navigation */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      width: 100%;
+      border-bottom: 1px solid rgba(199,184,159,.6);
+      background: rgba(255,254,251,.95);
+      backdrop-filter: blur(15px);
+      box-shadow: 0 6px 24px rgba(30,37,48,.045);
     }
-    .menu-toggle span {
-      display: block;
-      width: 21px;
-      height: 2px;
-      border-radius: 99px;
-      background: #3a3327;
-      transition: transform .22s ease, opacity .18s ease;
-    }
-    body.nav-open .menu-toggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    body.nav-open .menu-toggle span:nth-child(2) { opacity: 0; }
-    body.nav-open .menu-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    .site-navigation {
-      position: fixed;
-      z-index: 1050;
-      inset: 0 auto 0 0;
-      width: min(var(--nav-width), calc(100vw - 42px));
-      transform: translateX(-105%);
-      background: #fffefa;
-      border-right: 1px solid var(--line-strong);
-      box-shadow: 20px 0 55px rgba(41,34,24,.18);
-      transition: transform .24s ease;
-      overflow: hidden;
-    }
-    body.nav-open .site-navigation { transform: translateX(0); }
-    .nav-overlay {
-      position: fixed;
-      z-index: 1000;
-      inset: 0;
-      visibility: hidden;
-      opacity: 0;
-      background: rgba(31,28,24,.42);
-      backdrop-filter: blur(2px);
-      transition: opacity .2s ease, visibility .2s ease;
-    }
-    body.nav-open .nav-overlay { visibility: visible; opacity: 1; }
-    .nav-header {
-      min-height: 84px;
+    .site-header-inner {
+      width: min(1450px, calc(100% - 34px));
+      min-height: 88px;
+      margin: 0 auto;
       display: flex;
       align-items: center;
-      padding: 20px 22px 16px 78px;
-      border-bottom: 1px solid var(--line);
-      background: linear-gradient(115deg, #fff0bd, #fffaf0);
+      gap: 24px;
     }
-    .nav-title { font-size: 1.08rem; font-weight: 900; letter-spacing: -.02em; }
-    .nav-content {
-      height: calc(100vh - 84px);
-      padding: 14px 12px 28px;
-      overflow-y: auto;
-      overscroll-behavior: contain;
-    }
-    .nav-link {
+    .brand-logo {
       display: block;
-      margin: 2px 0;
-      padding: 10px 12px;
-      border-radius: 9px;
-      color: #303846;
-      font-size: .85rem;
-      font-weight: 760;
-      line-height: 1.28;
-      text-decoration: none;
-      transition: background .15s ease, transform .15s ease;
+      width: clamp(140px, 12vw, 190px);
+      height: auto;
+      object-fit: contain;
+      flex: 0 0 auto;
     }
-    .nav-link:hover, .nav-link:focus-visible { background: #f1ede4; transform: translateX(2px); outline: none; }
-    .nav-link.is-active { background: #fff0bd; color: #4e3a0b; box-shadow: inset 3px 0 0 var(--gold); }
-    .nav-group { margin-top: 8px; border-top: 1px solid var(--line); padding-top: 8px; }
-    .nav-group summary {
-      padding: 11px 12px;
-      border-radius: 9px;
-      color: #5b4510;
-      background: #fff4d1;
+    .header-divider {
+      width: 1px;
+      height: 34px;
+      background: #ddd2c1;
+      flex: 0 0 auto;
+    }
+    .header-kicker {
+      margin-left: auto;
+      color: #8a6f42;
+      font-size: .78rem;
+      font-weight: 820;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .nav-toggle {
+      position: fixed;
+      top: 104px;
+      left: 16px;
+      z-index: 90;
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(210,174,103,.95);
+      border-radius: 14px;
+      background: #0f2a43;
+      color: #fff;
+      box-shadow: 0 10px 24px rgba(15,42,67,.18);
       cursor: pointer;
-      font-size: .83rem;
-      font-weight: 860;
-      list-style-position: inside;
     }
-    .technique-nav { padding: 7px 0 0 8px; }
-    .nav-link-parent { border-left: 3px solid var(--gold); background: #faf6ec; }
-    .technique-link { position: relative; padding-left: 27px; font-size: .82rem; font-weight: 700; }
-    .technique-link::before {
+    .nav-toggle span, .nav-toggle::before, .nav-toggle::after {
+      content: "";
+      width: 21px;
+      height: 2px;
+      display: block;
+      background: currentColor;
+      border-radius: 3px;
+      transition: .2s ease;
+    }
+    .nav-toggle::before { transform: translateY(-6px); }
+    .nav-toggle::after { transform: translateY(6px); }
+    .nav-toggle span { margin: -2px 0; }
+    body.nav-open .nav-toggle::before { transform: translateY(2px) rotate(45deg); }
+    body.nav-open .nav-toggle::after { transform: translateY(-2px) rotate(-45deg); }
+    body.nav-open .nav-toggle span { opacity: 0; }
+
+    .nav-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 70;
+      background: rgba(12,22,32,.38);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s ease;
+    }
+    body.nav-open .nav-overlay { opacity: 1; pointer-events: auto; }
+
+    .sidebar-nav {
+      position: fixed;
+      top: 88px;
+      left: 0;
+      bottom: 0;
+      z-index: 80;
+      width: min(var(--nav-width), 88vw);
+      transform: translateX(-100%);
+      transition: transform .24s ease;
+      background: linear-gradient(180deg, #102f4b 0%, #0d273f 100%);
+      color: #fff;
+      border-right: 1px solid rgba(255,255,255,.1);
+      box-shadow: 20px 0 60px rgba(10,28,44,.2);
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: #8ea4b5 transparent;
+    }
+    body.nav-open .sidebar-nav { transform: translateX(0); }
+    .sidebar-head {
+      padding: 22px 22px 17px;
+      border-bottom: 1px solid rgba(255,255,255,.12);
+      color: #f9fbfc;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.08rem;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .sidebar-links {
+      list-style: none;
+      margin: 0;
+      padding: 16px 12px 24px;
+    }
+    .sidebar-links li { margin: 0; }
+    .sidebar-links a {
+      display: block;
+      padding: 9px 12px;
+      color: #dbe5ec;
+      border-left: 3px solid transparent;
+      border-radius: 8px;
+      font-size: .77rem;
+      font-weight: 760;
+      line-height: 1.35;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+    .sidebar-links a:hover, .sidebar-links a:focus-visible {
+      color: #fff;
+      background: rgba(255,255,255,.07);
+      border-left-color: #d7ae68;
+      outline: none;
+    }
+
+    /* Hallab hero */
+    .hallab-hero {
+      min-height: 330px;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      isolation: isolate;
+      border: 1px solid #173c5b;
+      background:
+        radial-gradient(circle at 76% 18%, rgba(220,184,122,.22), transparent 23rem),
+        linear-gradient(112deg, rgba(9,37,59,.98) 0%, rgba(13,50,76,.96) 60%, rgba(31,73,97,.9) 100%);
+      box-shadow: 0 24px 60px rgba(20,45,63,.15);
+    }
+    .hallab-hero::before {
       content: "";
       position: absolute;
-      left: 11px;
-      top: 50%;
-      width: 7px;
-      height: 7px;
-      transform: translateY(-50%);
-      border-radius: 99px;
-      background: #18aeb5;
+      inset: 0;
+      z-index: -2;
+      opacity: .2;
+      background:
+        linear-gradient(130deg, transparent 0 58%, rgba(216,180,117,.5) 58% 59.2%, transparent 59.2% 100%),
+        linear-gradient(130deg, transparent 0 65%, rgba(255,255,255,.16) 65% 65.6%, transparent 65.6% 100%);
     }
-    .technique-link.accent-green::before { background:#62ad52; }
-    .technique-link.accent-violet::before { background:#8369c7; }
-    .technique-link.accent-orange::before { background:#d78a34; }
-    .technique-link.accent-blue::before { background:#4c86c9; }
-    .technique-link.accent-rose::before { background:#c45f85; }
+    .hallab-hero::after {
+      content: "";
+      position: absolute;
+      right: -80px;
+      top: -120px;
+      width: 480px;
+      height: 480px;
+      z-index: -1;
+      border: 1px solid rgba(220,184,122,.24);
+      border-radius: 50%;
+      box-shadow:
+        0 0 0 50px rgba(255,255,255,.018),
+        0 0 0 100px rgba(220,184,122,.018);
+    }
+    .hallab-hero-copy {
+      position: relative;
+      z-index: 2;
+      max-width: 780px;
+    }
+    .hallab-hero h1 {
+      width: auto;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      color: #fff;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.6rem, 5.8vw, 5.2rem);
+      font-weight: 500;
+      letter-spacing: -.04em;
+      line-height: .98;
+    }
+    .hallab-hero h1 span { display: block; }
+    .hallab-hero h1 .hero-gold { color: #d8b473; }
 
-    @media (hover:hover) and (pointer:fine) {
-      .panel, .callout, .step-list li, .technique-card { transition: transform .17s ease, box-shadow .17s ease; }
-      .panel:hover, .callout:hover, .step-list li:hover, .technique-card:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(48,41,31,.08); }
+    /* Better small-screen behavior */
+    @media (max-width: 900px) {
+      .grid-3 { grid-template-columns: 1fr; }
+      .site-header-inner { min-height: 78px; }
+      .sidebar-nav { top: 78px; }
+      .nav-toggle { top: 91px; }
+      .header-kicker { display: none; }
+      .hallab-hero { min-height: 270px; }
     }
-@media (max-width: 900px) {
-      main { width: min(100% - 26px, 1180px); padding-top: 25px; }
-      .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-    @media (max-width: 660px) {
-      body { font-size: 15.4px; line-height: 1.62; }
-      main { width: min(100% - 14px, 1180px); padding: 74px 0 42px; }
-      section { margin-bottom: 11px; padding: 20px 16px 23px; border-radius: 17px; }
-      h1, h2, .section-title { margin-bottom: 22px; padding: 11px 12px 10px; border-left-width: 5px; font-size: 1.12rem; }
-      h2.section-title:not(:first-child) { margin-top: 28px; }
-      .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
-      .panel { padding: 18px 17px; }
-      .callout { padding: 16px 14px 16px 16px; border-left-width: 4px; }
-      .step-list { grid-template-columns: 1fr; }
-      .technique-card { margin-top: 14px; padding: 0 15px 17px; border-radius: 14px; }
-      .technique-heading { margin: 0 -15px 16px !important; padding: 14px 15px 13px; font-size: 1.02rem !important; }
-      .technique-card > h3:not(.technique-heading) { margin-top: 17px; }
-      .menu-toggle { top: 13px; left: 13px; width: 46px; height: 46px; }
-      .nav-header { min-height: 72px; padding-left: 72px; }
-      .nav-content { height: calc(100vh - 72px); }
-      .colour-coded-example { line-height: 2.02; }
-    }
-    @page {
-      size: A4 portrait;
-      margin: 13mm 12mm 15mm;
+    @media (max-width: 700px) {
+      main { width: min(100% - 22px, 1180px); padding-top: 17px; }
+      section { margin-bottom: 14px; padding: 24px 20px; border-radius: 18px; }
+      .grid-4, .grid-2 { grid-template-columns: 1fr; }
+      .site-header-inner { width: calc(100% - 22px); min-height: 70px; }
+      .brand-logo { width: 135px; }
+      .header-divider { display: none; }
+      .sidebar-nav { top: 70px; }
+      .nav-toggle { top: 80px; left: 10px; width: 43px; height: 43px; }
+      .hallab-hero { min-height: 220px; padding: 28px 24px; }
     }
 
     @media print {
-      html,
-      body {
-        width: auto !important;
-        min-width: 0 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        background: #fff !important;
-      }
-
-      body,
-      body.nav-open {
-        color: #161b24 !important;
-        font-family: Arial, Helvetica, sans-serif !important;
-        font-size: 9.4pt !important;
-        line-height: 1.4 !important;
-        overflow: visible !important;
-      }
-
-      *,
-      *::before,
-      *::after {
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-        animation: none !important;
-        transition: none !important;
-        text-shadow: none !important;
-      }
-
-      .menu-toggle,
-      .site-navigation,
-      .nav-overlay {
-        display: none !important;
-      }
-
-      main {
-        width: auto !important;
-        max-width: none !important;
-        margin: 0 !important;
-        padding: 0 !important;
-      }
-
-      section {
-        position: static !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        background: transparent !important;
-        border: 0 !important;
-        border-radius: 0 !important;
-        box-shadow: none !important;
-        break-before: auto;
-        page-break-before: auto;
-      }
-
-      #introduction,
-      #five-steps-analysis,
-      #persuasive-technique-setups {
-        break-before: page;
-        page-break-before: always;
-      }
-
-      h1,
-      h2,
-      h3,
-      h4,
-      .section-title,
-      .technique-heading,
-      .subtechnique-heading {
-        break-after: avoid-page;
-        page-break-after: avoid;
-      }
-
-      h1,
-      h2,
-      .section-title {
-        width: 100% !important;
-        margin: 0 0 5mm !important;
-        padding: 3.2mm 4mm 3mm !important;
-        border: .35mm solid #dfc16d !important;
-        border-left: 1.4mm solid var(--gold) !important;
-        border-radius: 2mm !important;
-        background: linear-gradient(100deg, #fff0b9 0%, #fff8dc 67%, #fffdf5 100%) !important;
-        box-shadow: none !important;
-        font-size: 15.5pt !important;
-        line-height: 1.16 !important;
-      }
-
-      h2.section-title:not(:first-child) {
-        margin-top: 6mm !important;
-      }
-
-      h3 {
-        margin: 4.5mm 0 2mm !important;
-        font-size: 10.2pt !important;
-        line-height: 1.2 !important;
-      }
-
-      h4 {
-        margin: 4mm 0 2mm !important;
-        font-size: 9.8pt !important;
-        line-height: 1.2 !important;
-      }
-
-      p {
-        max-width: none !important;
-        margin: 0 0 2.6mm !important;
-        orphans: 3;
-        widows: 3;
-      }
-
-      ul,
-      ol {
-        margin: 0 0 3mm !important;
-        padding-left: 5.5mm !important;
-      }
-
-      li {
-        margin: 1.1mm 0 !important;
-        orphans: 3;
-        widows: 3;
-      }
-
-      .grid-4,
-      .grid-3,
-      .grid-2 {
-        display: grid !important;
-        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-        gap: 3mm !important;
-        align-items: start !important;
-      }
-
-      .panel {
-        min-width: 0 !important;
-        margin: 0 !important;
-        padding: 4mm !important;
-        background: #fdfcf9 !important;
-        border: .3mm solid var(--line) !important;
-        border-radius: 2mm !important;
-        box-shadow: none !important;
-        break-inside: avoid-page;
-        page-break-inside: avoid;
-      }
-
-      .panel h3 {
-        margin: 0 0 2.5mm !important;
-        padding-bottom: 1mm !important;
-      }
-
-      .compact p {
-        padding: 1.6mm 0 !important;
-      }
-
-      .callout {
-        margin: 2.4mm 0 3.4mm !important;
-        padding: 3.5mm 4mm !important;
-        border-width: .3mm !important;
-        border-left-width: 1.2mm !important;
-        border-radius: 2mm !important;
-        box-shadow: none !important;
-        break-inside: avoid-page;
-        page-break-inside: avoid;
-      }
-
-      .callout.template p[class^="intro-line-"] {
-        padding: 2.7mm 3mm !important;
-        border-left-width: 1mm !important;
-        border-radius: 1.5mm !important;
-      }
-
-      .step-list {
-        display: grid !important;
-        grid-template-columns: 1fr !important;
-        gap: 2mm !important;
-        margin: 0 0 4mm !important;
-        break-inside: avoid-page;
-        page-break-inside: avoid;
-      }
-
-      .step-list li {
-        padding: 2.7mm 3mm !important;
-        border-radius: 1.8mm !important;
-        box-shadow: none !important;
-      }
-
-      .colour-coded-example {
-        line-height: 1.7 !important;
-      }
-
-      .highlight {
-        padding: .08em .18em .1em !important;
-      }
-
-      .separator {
-        margin: 6mm 0 !important;
-      }
-
-      #persuasive-technique-setups {
-        margin-bottom: 5mm !important;
-      }
-
-      .technique-card {
-        overflow: visible !important;
-        margin: 0 !important;
-        padding: 0 0 4mm !important;
-        background: transparent !important;
-        border: 0 !important;
-        border-top: 1.4mm solid var(--accent) !important;
-        border-radius: 0 !important;
-        box-shadow: none !important;
-        break-before: auto;
-        page-break-before: auto;
-        break-inside: avoid-page;
-        page-break-inside: avoid;
-        -webkit-box-decoration-break: clone;
-        box-decoration-break: clone;
-      }
-
-
-      .technique-heading {
-        margin: 0 0 4mm !important;
-        padding: 3.2mm 4mm 3mm !important;
-        background: linear-gradient(100deg, var(--accent-soft), #fff 86%) !important;
-        border: 0 !important;
-        border-bottom: .35mm solid var(--accent) !important;
-        color: #202733 !important;
-        font-size: 13.5pt !important;
-        line-height: 1.15 !important;
-      }
-
-      .technique-card > h3:not(.technique-heading) {
-        margin: 4mm 0 2mm !important;
-        padding: 1.2mm 2mm !important;
-        border: .3mm solid #ddcfaa !important;
-        border-radius: 1.4mm !important;
-        background: #fff6d8 !important;
-        font-size: 8.5pt !important;
-      }
-
-      .subtechnique-heading {
-        margin: 4.5mm 0 2.5mm !important;
-        padding: 2.2mm 3mm !important;
-        border-left: 1.1mm solid var(--accent) !important;
-        border-radius: 1.5mm !important;
-        background: var(--accent-soft) !important;
-        font-size: 10pt !important;
-      }
-
-      .technique-card .callout {
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-      }
-
-      a,
-      a:visited {
-        color: inherit !important;
-        text-decoration: none !important;
-      }
+      .site-header, .nav-toggle, .nav-overlay, .sidebar-nav { display: none !important; }
+      body { background: #fff !important; color: #111; font-size: 11pt; }
+      main { width: 100%; padding: 0; }
+      section, .panel, .technique-card, .callout { break-inside: avoid; box-shadow: none !important; }
+      section { border-color: #cfcfcf; }
     }
+  </style>
 
-
-    /* Final print pagination and typography fixes */
-    @media print {
-      /* Every major section before the analysis cycle begins starts on a fresh A4 page. */
-      #bonus-adverbs-verbs,
-      #introduction,
-      #shepherding,
-      #substantiating,
-      #mobilising,
-      #conclusion,
-      #five-steps-analysis {
-        display: block !important;
-        break-before: page !important;
-        page-break-before: always !important;
-      }
-
-      /* The first heading is already at the beginning of the document. */
-      #adverb-verb-combination {
-        break-before: auto !important;
-        page-break-before: auto !important;
-      }
-
-      /* Keep the three compact reference sections together on one printed A4 page. */
-      .print-reference-page {
-        break-before: page !important;
-        page-break-before: always !important;
-        break-inside: avoid-page !important;
-        page-break-inside: avoid !important;
-      }
-
-      #sentence-starters,
-      #words-like-highlight {
-        break-before: auto !important;
-        page-break-before: auto !important;
-      }
-
-      /* Keep the heading and the first meaningful block together. */
-      #bonus-adverbs-verbs + .arrow-list,
-      #sentence-starters + .grid-3,
-      #words-like-highlight + .grid-3,
-      #introduction + h3,
-      #shepherding + h3,
-      #substantiating + .callout,
-      #mobilising + h3,
-      #conclusion + .callout,
-      #five-steps-analysis + .step-list {
-        break-before: avoid-page !important;
-        page-break-before: avoid !important;
-      }
-
-      .mobilising-feature {
-        break-inside: avoid-page !important;
-        page-break-inside: avoid !important;
-      }
-
-      .mobilising-feature-title {
-        margin-top: 4mm !important;
-        margin-bottom: 2.5mm !important;
-        padding: 2.8mm 3.5mm !important;
-        border-left-width: 1.2mm !important;
-        border-radius: 1.8mm !important;
-        font-size: 10.5pt !important;
-      }
-
-      /* Prevent the browser from synthesising irregular faux-bold weights in the PDF. */
-      *, *::before, *::after {
-        font-synthesis: none !important;
-      }
-
-      body,
-      p,
-      li,
-      .panel,
-      .compact,
-      .callout,
-      .colour-coded-example,
-      .highlight {
-        font-weight: 400 !important;
-      }
-
-      h1,
-      h2,
-      h3,
-      h4,
-      .section-title,
-      .technique-heading,
-      .subtechnique-heading,
-      strong,
-      b {
-        font-weight: 700 !important;
-      }
-
-      /* Avoid accidental carry-over or clipping at forced page boundaries. */
-      section,
-      .grid-4,
-      .grid-3,
-      .grid-2,
-      .panel,
-      .callout,
-      .arrow-list,
-      .diamond-list,
-      .check-list {
-        overflow: visible !important;
-      }
-    }
-
+<style id="hallab-short-title-fix">
+.hallab-hero{
+  min-height:220px!important;
+  padding:clamp(30px,4vw,46px)!important;
+  display:flex!important;
+  align-items:center!important;
+}
+.hallab-hero-copy{width:100%!important;}
+.hallab-hero h1{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  background:none!important;
+  box-shadow:none!important;
+  color:#d6b47e!important;
+  font-family:Georgia,'Times New Roman',serif!important;
+  font-size:clamp(3rem,7vw,5.6rem)!important;
+  font-weight:500!important;
+  line-height:1!important;
+  letter-spacing:-.045em!important;
+  text-shadow:0 2px 16px rgba(0,0,0,.16)!important;
+}
+@media(max-width:520px){
+  .hallab-hero{min-height:170px!important;padding:28px 22px!important;}
+  .hallab-hero h1{font-size:3rem!important;}
+}
 </style>
-<meta content="#fff0bd" name="theme-color"/><meta content="1" name="cms-content-version"/></head>
-<body class=""><button aria-controls="site-navigation" aria-expanded="false" aria-label="Open navigation" class="menu-toggle" type="button"><span></span><span></span><span></span></button><aside aria-label="Page navigation" class="site-navigation" id="site-navigation"><div class="nav-header"><div class="nav-title">Ultimate AA</div></div><nav class="nav-content"><a class="nav-link" href="#adverb-verb-combination">ADVERB / VERB COMBINATION</a><a class="nav-link" href="#bonus-adverbs-verbs">BONUS ADVERBS / VERBS</a><a class="nav-link" href="#sentence-starters">SENTENCE STARTERS</a><a class="nav-link" href="#words-like-highlight">WORDS LIKE HIGHLIGHT</a><a class="nav-link" href="#introduction">INTRODUCTION</a><a class="nav-link" href="#shepherding">SHEPHERDING</a><a class="nav-link" href="#substantiating">SUBSTANTIATING</a><a class="nav-link is-active" href="#mobilising">MOBILISING</a><a class="nav-link" href="#conclusion">CONCLUSION</a><a class="nav-link" href="#five-steps-analysis">5 STEPS OF ANALYSIS</a><a class="nav-link" href="#next-level-five-steps-analysis">NEXT LEVEL 5 STEPS OF ANALYSIS</a><details class="nav-group" open=""><summary>PERSUASIVE TECHNIQUE SETUPS</summary><div class="technique-nav"><a class="nav-link technique-link accent-cyan" href="#technique-plosive">Plosive</a><a class="nav-link technique-link accent-green" href="#technique-alliteration">Alliteration</a><a class="nav-link technique-link accent-violet" href="#technique-anaphora">Anaphora</a><a class="nav-link technique-link accent-orange" href="#technique-rhetorical-questions">Rhetorical Questions</a><a class="nav-link technique-link accent-orange" href="#technique-rhetorical-questions-many">Rhetorical Questions: Many</a><a class="nav-link technique-link accent-orange" href="#technique-rhetorical-questions-single">Rhetorical Questions: Single</a><a class="nav-link technique-link accent-blue" href="#technique-imagery-types">IMAGERY TYPES</a><a class="nav-link technique-link accent-blue" href="#technique-imagery-types-visceral-cataclysmic-sensory-imagery">IMAGERY TYPES: Visceral / Cataclysmic / Sensory Imagery</a><a class="nav-link technique-link accent-blue" href="#technique-imagery-types-utopic-imagery">IMAGERY TYPES: Utopic Imagery</a><a class="nav-link technique-link accent-blue" href="#technique-imagery-types-dystopic-imagery">IMAGERY TYPES: Dystopic Imagery</a><a class="nav-link technique-link accent-rose" href="#technique-bold-word-title">Bold Word/Title</a><a class="nav-link technique-link accent-cyan" href="#technique-anecdotal-evidence">Anecdotal Evidence</a><a class="nav-link technique-link accent-green" href="#technique-dichotomy">Dichotomy</a><a class="nav-link technique-link accent-violet" href="#technique-statistics">Statistics</a><a class="nav-link technique-link accent-orange" href="#technique-tonal-shift">Tonal Shift</a><a class="nav-link technique-link accent-blue" href="#technique-connotations">Connotations</a><a class="nav-link technique-link accent-rose" href="#technique-image-analysis">Image Analysis</a><a class="nav-link technique-link accent-cyan" href="#technique-asyndeton">Asyndeton</a><a class="nav-link technique-link accent-green" href="#technique-semantic-field">Semantic Field</a><a class="nav-link technique-link accent-violet" href="#technique-auxesis">Auxesis</a><a class="nav-link technique-link accent-orange" href="#technique-syntactic-parallelism">Syntactic Parallelism</a></div></details></nav></aside><div aria-hidden="true" class="nav-overlay"></div>
+</head>
+<body>
+<header class="site-header">
+<div class="site-header-inner">
+<img alt="Hallab Education" class="brand-logo" src="assets/hallab-logo.png"/>
+<span class="header-divider" aria-hidden="true"></span>
+<div class="header-kicker">VCE English · Analysing Argument</div>
+</div>
+</header>
+<button aria-controls="sidebarNav" aria-expanded="false" aria-label="Open guide navigation" class="nav-toggle" id="navToggle" type="button"><span></span></button>
+<div class="nav-overlay" id="navOverlay"></div>
+<nav aria-label="Guide sections" class="sidebar-nav" id="sidebarNav">
+<div class="sidebar-head">Hallab Education · Ultimate AA</div>
+<ul class="sidebar-links">
+<li><a href="#adverb-verb-combination">Adverb / Verb Combination</a></li>
+<li><a href="#bonus-adverbs-verbs">Bonus Adverbs / Verbs</a></li>
+<li><a href="#sentence-starters">Sentence Starters</a></li>
+<li><a href="#words-like-highlight">Words Like Highlight</a></li>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#shepherding">Shepherding</a></li>
+<li><a href="#substantiating">Substantiating</a></li>
+<li><a href="#mobilising">Mobilising</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#5-steps-of-analysis">5 Steps of Analysis</a></li>
+<li><a href="#next-level-analysis">Next Level Analysis</a></li>
+<li><a href="#common-types-of-arguments">Common Types of Arguments</a></li>
+<li><a href="#persuasive-technique-setups">Technique Setups</a></li>
+<li><a href="#alliteration">Alliteration</a></li>
+<li><a href="#anaphora">Anaphora</a></li>
+<li><a href="#anecdotal-evidence">Anecdotal Evidence</a></li>
+<li><a href="#asyndeton">Asyndeton</a></li>
+<li><a href="#auxesis">Auxesis</a></li>
+<li><a href="#bold-word-title">Bold Word / Title</a></li>
+<li><a href="#connotations">Connotations</a></li>
+<li><a href="#dichotomy">Dichotomy</a></li>
+<li><a href="#image-analysis">Image Analysis</a></li>
+<li><a href="#imagery-types">Imagery Types</a></li>
+<li><a href="#plosive">Plosive</a></li>
+<li><a href="#rhetorical-questions">Rhetorical Questions</a></li>
+<li><a href="#semantic-field">Semantic Field</a></li>
+<li><a href="#statistics">Statistics</a></li>
+<li><a href="#syntactic-parallelism">Syntactic Parallelism</a></li>
+<li><a href="#tonal-shift">Tonal Shift</a></li>
+<li><a href="#spoken-audio-texts">Spoken / Audio Texts</a></li>
+<li><a href="#audience-analysis">Audience Analysis</a></li>
+<li><a href="#common-types-of-pieces">Common Types of Pieces</a></li>
+<li><a href="#final-checklist">Final Checklist</a></li>
+</ul>
+</nav>
 <main>
-<section>
-<h1 class="section-title" id="adverb-verb-combination">ADVERB / VERB COMBINATION</h1>
+<section class="hallab-hero" aria-label="Ultimate Key To Success guide">
+      <div class="hallab-hero-copy">
+        <h1>Ultimate Key To Success</h1>
+      </div>
+    </section>
+<section id="adverb-verb-combination">
+<h2>Adverb / Verb Combination</h2>
 <div class="grid-4">
-<div class="panel compact" data-cms-list="adverb-verbs.json::positive">
-<h3>Positive</h3>
-<p>Fervidly espouse/Vehemently endorses/ Zealously assist / Passionately advocate / Glowingly praise – Wholeheartedly support.</p>
+<div class="panel">
+<h3>Positive / Endorsement</h3>
+<p>Use when the writer validates, supports, encourages or approves.</p>
+<ul class="arrow-list">
+<li>Warmly celebrates</li><li>Gently reinforces</li><li>Enthusiastically endorses</li><li>Passionately supports</li><li>Wholeheartedly champions</li>
+</ul>
 </div>
-<div class="panel compact" data-cms-list="adverb-verbs.json::negative">
-<h3>Negative</h3>
-<p>Scathingly Berate - condemn</p>
-<p>Fearfully contemplate – feel threatened while examining a particular situation/action</p>
-<p>Vigorously/Emphatically/Scathingly condemn/Disparagingly denounce – disapprove wholeheartedly and forcefully</p>
-<p>Despairingly condemn – hopelessly disapprove</p>
-<p>Indignantly rebuke – Disapprove of someone unjust.</p>
-<p>Unwaveringly despondent – Fixed in a loss of hope.</p>
-<p>Emphatically/Virulently/Vigorously /Stridently excoriate – criticise severely</p>
-<p>Jarringly Vilify/Undermine – make the opposition immediately disparaged and lose their worth</p>
-<p>Belligerently refute – Aggressively disprove a statement.</p>
+<div class="panel">
+<h3>Negative / Critical</h3>
+<p>Use when the writer attacks, rejects, discredits or warns.</p>
+<ul class="arrow-list">
+<li>Scathingly critiques</li><li>Scornfully condemns</li><li>Fiercely denounces</li><li>Bluntly dismisses</li><li>Harshly rebukes</li>
+</ul>
 </div>
-<div class="panel compact" data-cms-list="adverb-verbs.json::satirical">
-<h3>Satirical</h3>
-<p>Candidly deride – Straightforwardly ridicule</p>
-<p>Derisively mock – Completely ridicule someone/something.</p>
-<p>Satirically disparage – Satirically reduce the status of someone.</p>
+<div class="panel">
+<h3>Neutral / Measured</h3>
+<p>Use when the writer explains, observes, frames or reasons.</p>
+<ul class="arrow-list">
+<li>Calmly contends</li><li>Firmly asserts</li><li>Logically reasons</li><li>Objectively notes</li><li>Measuredly argues</li>
+</ul>
 </div>
-<div class="panel compact" data-cms-list="adverb-verbs.json::neutral">
-<h3>Neutral</h3>
-<p>Forthrightly/Authoritatively/Stridently/Harshly assert/declare – Posit strongly</p>
-<p>Emphatically analogising the conflict to a war-like battlefield – clearly compare to a war-like battlefield.</p>
-<p>Systematically outline – Chronologically examine.</p>
-<p>Pointedly accentuate – to emphasise something bad.</p>
-<p>Overtly/Blatantly injudicious – A clearly unwise decision.</p>
+<div class="panel">
+<h3>Satirical / Ironic</h3>
+<p>Use when the writer mocks, ridicules or exposes absurdity.</p>
+<ul class="arrow-list">
+<li>Sardonically mocks</li><li>Mockingly ridicules</li><li>Wryly observes</li><li>Sarcastically derides</li><li>Ironically exposes</li>
+</ul>
 </div>
 </div>
 </section>
-<section class="print-reference-page">
-<h2 class="section-title" id="bonus-adverbs-verbs">BONUS ADVERBS / VERBS</h2>
-<ul class="arrow-list" data-cms-list="quick-reference.json::bonus">
-<li>Ardently – passionately</li>
-<li>Ominously - scary</li>
-<li>Three Rs – Refute (1 + 1 does NOT equal 3), Rebuke (criticising a person), Repudiate (criticising an idea)</li>
-</ul>
-<div class="separator"></div>
-<h2 class="section-title" id="sentence-starters">SENTENCE STARTERS</h2>
-<div class="grid-3">
-<ul class="diamond-list" data-cms-list="quick-reference.json::sentence_starters.0">
-<li>(Author)</li>
-<li>Here, Melissa underscores...</li>
-<li>Indeed, …</li>
-<li>Make sure to keep pushing yourself. In doing so, you will achieve success.</li>
-<li>In this way...</li>
-<li>In a blunt and almost brusque way, Wiley brings readers back to reality</li>
-<li>Given the daunting connotations of the word 'hate', Mikail...</li>
-</ul>
-<ul class="diamond-list" data-cms-list="quick-reference.json::sentence_starters.1">
-<li>Not only is driving off the road illegal, it is downright dangerous.</li>
-<li>As such, Ejren highlights the power of…</li>
-<li>To this end / Ultimately, Wiley highlights...</li>
-<li>From the outset, ...</li>
-</ul>
-<ul class="diamond-list" data-cms-list="quick-reference.json::sentence_starters.2">
-<li>In conjunction / In tandem with the alliterative 'p' in 'powerful play', John's compositionally dominating adjacent image establishes an ominous sense of fear within ...</li>
-<li>Accordingly, /Therefore/Thus</li>
-<li>Hence, In turn</li>
-<li>Despite/notwithstanding the health implications, some people still choose to cliff jump</li>
-</ul>
+<section id="bonus-adverbs-verbs">
+<h2>Bonus Adverbs / Verbs</h2>
+<div class="grid-2">
+<div class="panel compact">
+<p><strong>Affirmatively</strong> reinforces</p>
+<p><strong>Assuredly</strong> asserts</p>
+<p><strong>Gently</strong> appeals</p>
+<p><strong>Incisively</strong> critiques</p>
+<p><strong>Fervently</strong> advocates</p>
+<p><strong>Compellingly</strong> contends</p>
 </div>
-<div class="separator"></div>
-<h2 class="section-title" id="words-like-highlight">WORDS LIKE HIGHLIGHT</h2>
-<div class="grid-3">
-<ul class="check-list" data-cms-list="quick-reference.json::words_like_highlight.0">
-<li>Highlights</li>
-<li>Underscores</li>
-<li>Illustrates</li>
-<li>Presents</li>
-</ul>
-<ul class="check-list" data-cms-list="quick-reference.json::words_like_highlight.1">
-<li>Exemplifies</li>
-<li>Elucidates</li>
-<li>Showcases</li>
-<li>Emphasis</li>
-</ul>
-<ul class="check-list" data-cms-list="quick-reference.json::words_like_highlight.2">
-<li>Reinforces</li>
-<li>Establishes</li>
-<li>Manifests</li>
-</ul>
+<div class="panel compact">
+<p><strong>Passionately</strong> calls for</p>
+<p><strong>Forthrightly</strong> argues</p>
+<p><strong>Dismissively</strong> attacks</p>
+<p><strong>Wryly</strong> observes</p>
+<p><strong>Sombrely</strong> warns</p>
+<p><strong>Urgently</strong> implores</p>
+</div>
 </div>
 </section>
-<section>
-<h2 class="section-title" id="introduction">INTRODUCTION</h2>
-<h3>4 Steps of Introduction</h3>
-<ol class="step-list intro-steps" data-cms-list="introduction.json::steps">
-<li>(1) Broader Implications</li>
-<li>(2) Contention</li>
-<li>(3) Audience and Image</li>
-<li>(4) Call to Action</li>
-</ol>
-<h3>Template</h3>
-<div class="callout template colour-coded-callout">
-<p class="intro-line-1" data-cms-text="introduction.json::template_lines.0">Ubiquitous within modern society lies the need to…, bringing into question whether …</p>
-<p class="intro-line-2" data-cms-text="introduction.json::template_lines.1">In light of this, John Wick (adverb) contends that …. As it poses… within his article entitled “…”.</p>
-<p class="intro-line-3" data-cms-text="introduction.json::template_lines.2">Appealing directly towards …, Wick supplements his piece with an image of ... in order to substantiate his piece.</p>
-<p class="intro-line-4" data-cms-text="introduction.json::template_lines.3">Ultimately, Wick (adverb) calls for individuals to (contention) … as only then can …</p>
+<section id="sentence-starters">
+<h2>Sentence Starters</h2>
+<div class="grid-2">
+<div class="panel">
+<h3>Analysis Openers</h3>
+<ul class="diamond-list">
+<li>By employing …, the author …</li>
+<li>Through the deliberately … depiction of …, the author …</li>
+<li>By characterising … as …, the author …</li>
+<li>The author’s use of … enables them to …</li>
+<li>In framing … as …, the author …</li>
+</ul>
 </div>
-<h3>EXAMPLE:</h3>
+<div class="panel">
+<h3>Audience Effect Openers</h3>
+<ul class="diamond-list">
+<li>Such language positions … to …</li>
+<li>Accordingly, … may feel compelled to …</li>
+<li>This encourages … to perceive … as …</li>
+<li>As a consequence, … are invited to …</li>
+<li>Thereby, … are predisposed to …</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="words-like-highlight">
+<h2>Words Like Highlight</h2>
+<div class="grid-3">
+<div class="panel"><h3>Reveal / Expose</h3><p>expose · reveal · uncover · illuminate · foreground · spotlight · accentuate</p></div>
+<div class="panel"><h3>Emphasise / Intensify</h3><p>underscore · emphasise · amplify · magnify · heighten · reinforce · consolidate</p></div>
+<div class="panel"><h3>Frame / Construct</h3><p>frame · construct · characterise · depict · portray · cast · position</p></div>
+</div>
+</section>
+<section id="introduction">
+<h2>Introduction · 4 Steps</h2>
+<ul class="step-list intro-steps"><li>(1) Broader Implications</li><li>(2) Contention</li><li>(3) Audience and Image</li><li>(4) Call to Action</li></ul>
+<div class="callout template">
+<p class="intro-line-1">Ubiquitous within modern society lies the need to…, bringing into question whether …</p>
+<p class="intro-line-2">In light of this, John Wick (adverb) contends that …. As it poses… within his article entitled “…”.</p>
+<p class="intro-line-3">Appealing directly towards …, Wick supplements his piece with an image of ... in order to substantiate his piece.</p>
+<p class="intro-line-4">Ultimately, Wick (adverb) calls for individuals to (contention) … as only then can …</p>
+</div>
+<h3>Example</h3>
 <div class="callout example colour-coded-callout">
-<p class="colour-coded-example"><span class="highlight intro-1" data-cms-text="introduction.json::example_segments.0">Ubiquitous within modern society lies the need for students to remain focused within learning environments, bringing into question whether mobile phones should be restricted during class.</span> <span class="highlight intro-2" data-cms-text="introduction.json::example_segments.1">In light of this, Sarah Miller firmly contends that mobile phones should be restricted during class as they pose a significant distraction to students within her opinion piece entitled “Put the Phones Away”.</span> <span class="highlight intro-3" data-cms-text="introduction.json::example_segments.2">Appealing directly towards parents, teachers and students, Miller supplements her piece with an image of a student distracted by their phone during class in order to substantiate her piece.</span> <span class="highlight intro-4" data-cms-text="introduction.json::example_segments.3">Ultimately, Miller strongly calls for schools to restrict mobile-phone use during class as only then can students remain focused and engaged in their learning.</span></p>
+<p class="colour-coded-example"><span class="highlight intro-1">Ubiquitous within modern society lies the need for students to remain focused within learning environments, bringing into question whether mobile phones should be restricted during class.</span> <span class="highlight intro-2">In light of this, Sarah Miller firmly contends that mobile phones should be restricted during class as they pose a significant distraction to students within her opinion piece entitled “Put the Phones Away”.</span> <span class="highlight intro-3">Appealing directly towards parents, teachers and students, Miller supplements her piece with an image of a student distracted by their phone during class in order to substantiate her piece.</span> <span class="highlight intro-4">Ultimately, Miller strongly calls for schools to restrict mobile-phone use during class as only then can students remain focused and engaged in their learning.</span></p>
 </div>
 </section>
-<section>
-<h2 class="section-title" id="shepherding">SHEPHERDING</h2>
-<h3>TOPIC SENTENCE 1</h3>
-<div class="callout template">
-<p data-cms-text="shepherding.json::topic_template_lines.0">From the outset, the author (adverb) begins their piece by (adverb) presenting a (type of argument),</p>
-<p data-cms-text="shepherding.json::topic_template_lines.1">(adverb) highlighting …, to predispose (PREPARE) the audience to the subsequent arguments</p>
+<section id="shepherding">
+<h2>Shepherding</h2>
+<div class="callout template"><p><strong>Function:</strong> orient the audience, establish shared values and guide them toward the author’s preferred lens.</p></div>
+<h3>Sample Topic Sentences</h3>
+<div class="grid-2">
+<div class="panel"><p>From the outset, [author] warmly constructs … as …, inviting [audience] to identify with … before confronting them with …</p></div>
+<div class="panel"><p>Initially, [author] begins with a community-based argument, evoking … in order to predispose [audience] to …</p></div>
 </div>
-<h3>EXAMPLE:</h3>
-<div class="callout example"><p data-cms-text="shepherding.json::topic_examples.0">From the outset, ABU HALEEB wholeheartedly begins their piece by forthrightly presenting a community-based argument zealously highlighting the importance of sacrifice in the medical profession, to predispose medical staff to his subsequent arguments.</p></div>
-<h3>EXAMPLE:</h3>
-<div class="callout example"><p data-cms-text="shepherding.json::topic_examples.1">From the outset, Mick wholeheartedly begins her piece by candidly presenting a medicalbased argument, passionately highlighting the health benefits that come out of swimming, to predispose VCE students to her subsequent arguments.</p></div>
-<h3>TYPES OF ARGUMENT</h3>
-<ul class="arrow-list" data-cms-list="shepherding.json::argument_types">
-<li>Community-based argument - social, people</li>
-<li>Fiscal argument - financial</li>
-<li>Sentimental argument - reminding you of the past</li>
-<li>Logistics argument - systems behind how to make something a reality</li>
-<li>Environmental argument - environment</li>
-<li>Medical-based argument - health-based</li>
-<li>Legalistic argument - laws</li>
-<li>Cogent argument – logical, intuitive</li>
-<li>Didactic argument - moral / values argument</li>
+<h3>What to Analyse</h3>
+<ul class="check-list">
+<li>Shared values and assumptions.</li><li>Community identity and belonging.</li><li>Emotional predisposition before the central argument develops.</li><li>How the opening frames the issue.</li>
 </ul>
-<h3>LINKING SENTENCE 1</h3>
-<div class="callout template"><p data-cms-text="shepherding.json::linking_template">Ultimately, the (author) (adverb) commences their piece by shepherding them into a heightened state of ... by establishing ...</p></div>
-<h3>EXAMPLE:</h3>
-<div class="callout example"><p data-cms-text="shepherding.json::linking_example">Ultimately, the Art and Media Club vehemently commences their piece by shepherding them into a heightened state of joy and reminiscence by establishing their outstanding connection with the new library and the monumental impacts of the old library on generations.</p></div>
 </section>
-<section>
-<h2 class="section-title" id="substantiating">SUBSTANTIATING</h2>
-<div class="callout template">
-<p data-cms-text="substantiating.json::template_lines.0">Shifting from an (adverb) (verb) to a (adverb) (verb) demeanour/tone</p>
-<p data-cms-text="substantiating.json::template_lines.1">(author) (adverb) substantiates their piece by (adverb) outlining/highlighting …</p>
-</div>
-<h3>EXAMPLE:</h3>
-<div class="callout example"><p data-cms-text="substantiating.json::example">Shifting from a passionately presenting to a vigorously highlighting demeanour/tone, Khaled GPT wholeheartedly substantiates his piece by forthrightly outlining the importance of eating chocolate in an environment of healthy foods.</p></div>
-<h3>LINKING SENTENCE 2</h3>
-<div class="callout template"><p data-cms-text="substantiating.json::linking_template">In this way, the (author) (adverb) substantiates their (type of piece) by transitioning to highlighting ...</p></div>
-<h3>EXAMPLE:</h3>
-<div class="callout example"><p data-cms-text="substantiating.json::linking_example">In this way, the Art and Media Club didactically substantiates their letter by transitioning to highlighting the inconsiderate nature of the Bankswood Council in that it privileges bland offices over the creativity of the community.</p></div>
+<section id="substantiating">
+<h2>Substantiating</h2>
+<div class="callout template"><p><strong>Function:</strong> validate the contention with evidence, examples, anecdotes, statistics, expert authority or logical reasoning.</p></div>
+<div class="panel"><p><strong>Useful analytical move:</strong> explain not simply that evidence “proves” the author’s point, but why the selected evidence appears credible, representative or difficult for the target audience to dismiss.</p></div>
 </section>
-<section>
-<h2 class="section-title" id="mobilising">MOBILISING</h2>
-<h3>TOPIC SENTENCE 3</h3>
-<div class="callout template"><p data-cms-text="mobilising.json::standard.topic_template">Ultimately, (author) (adverb) finalises their () piece by (adverb) calling for (type of person) to ...</p></div>
-<h3>EXAMPLE:</h3>
-<div class="callout example"><p data-cms-text="mobilising.json::standard.topic_example">Ultimately, Rohaan fearfully finalises his passionate piece by forthrightly calling for individuals to go to Hawaii and achieve monetary success.</p></div>
-<h3>LINKING SENTENCE 3</h3>
-<div class="callout template"><p data-cms-text="mobilising.json::standard.linking_template">To this end, author (adverb) concludes their piece by mobilising such (type of person) to recognise ...</p></div>
-<h3>EXAMPLE:</h3>
-<div class="callout example"><p data-cms-text="mobilising.json::standard.linking_example">To this end, Wiley passionately concludes her piece by mobilising such residents to recognise the importance of the tourist attraction given the communal benefits as well as the increased care people in the town will have.</p></div>
+<section id="mobilising">
+<h2>Mobilising</h2>
+<div class="callout template"><p><strong>Function:</strong> convert audience agreement into a practical, emotional or behavioural response.</p></div>
 <div class="mobilising-feature">
-<h3 class="mobilising-feature-title">MINIMUM EFFORT, MAXIMUM BENEFIT <span class="strategy-description" data-cms-text="mobilising.json::minimum_effort.description">Makes the solution seem easy to implement, lowering the audience’s perceived barrier to action.</span></h3>
-<h3>TOPIC SENTENCE 3</h3>
-<div class="callout template"><p data-cms-text="mobilising.json::minimum_effort.topic_template">Ultimately, (author) (adverb) finalises their (type of piece) by (adverb) presenting a (type of argument), highlighting the minimal effort required to ... and the maximum benefit of ..., to mobilise (type of person) to ...</p></div>
-<h3>EXAMPLE:</h3>
-<div class="callout example"><p data-cms-text="mobilising.json::minimum_effort.topic_example">Ultimately, Wiley passionately finalises her piece by forthrightly presenting a community-based argument, highlighting the minimal effort required to support the tourist attraction and the maximum communal benefit that will emerge, to mobilise Lawton residents to champion its implementation.</p></div>
-<h3>LINKING SENTENCE 3</h3>
-<div class="callout template"><p data-cms-text="mobilising.json::minimum_effort.linking_template">To this end, (author) (adverb) concludes their piece by mobilising such (type of person) to recognise the ease of ... given the ... benefits it will provide.</p></div>
-<h3>EXAMPLE:</h3>
-<div class="callout example"><p data-cms-text="mobilising.json::minimum_effort.linking_example">To this end, Wiley passionately concludes her piece by mobilising such residents to recognise the ease of supporting the tourist attraction given the fiscal and communal benefits it will provide.</p></div>
+<h3 class="mobilising-feature-title">Personal Responsibility <span class="strategy-description">Frames action as an individual obligation rather than something that can be delegated to others.</span></h3>
+<div class="panel"><p>By directly implicating [audience] in …, [author] seeks to dismantle the comfort of passive observation and make inaction itself appear consequential.</p></div>
 </div>
 <div class="mobilising-feature">
-<h3 class="mobilising-feature-title">CYCLICAL BOOKENDING STRUCTURE <span class="strategy-description" data-cms-text="mobilising.json::cyclical_bookending.description">The author ends in a certain way which links to the beginning</span></h3>
-<h3>TOPIC SENTENCE 3</h3>
-<div class="callout template"><p data-cms-text="mobilising.json::cyclical_bookending.topic_template">Ultimately, by (adverb) returning to the (type of argument) established from the outset, (author) cyclically bookends their piece by (adverb) echoing ..., reinforcing ... and mobilising (type of person) to ...</p></div>
-<h3>EXAMPLE:</h3>
-<div class="callout example"><p data-cms-text="mobilising.json::cyclical_bookending.topic_example">Ultimately, by passionately returning to the community-based argument established from the outset, Wiley cyclically bookends her piece by forthrightly echoing the communal importance of the tourist attraction, reinforcing its benefits and mobilising residents to champion its implementation.</p></div>
-<h3>LINKING SENTENCE 3</h3>
-<div class="callout template"><p data-cms-text="mobilising.json::cyclical_bookending.linking_template">To this end, (author) (adverb) concludes their piece by cyclically returning to the (type of argument) established from the outset, reinforcing ... and mobilising such (type of person) to recognise ...</p></div>
-<h3>EXAMPLE:</h3>
-<div class="callout example"><p data-cms-text="mobilising.json::cyclical_bookending.linking_example">To this end, Wiley passionately concludes her piece by cyclically returning to the community-based argument established from the outset, reinforcing the communal importance of the tourist attraction and mobilising such residents to recognise its benefits and champion its implementation.</p></div>
+<h3 class="mobilising-feature-title">Collective Responsibility <span class="strategy-description">Positions the issue as dependent on shared community action.</span></h3>
+<div class="panel"><p>Through inclusive language such as “we”, “our” and “together”, [author] collapses the distance between writer and audience, framing the desired response as a communal obligation.</p></div>
+</div>
+<div class="mobilising-feature">
+<h3 class="mobilising-feature-title">Practical Call to Action <span class="strategy-description">Gives the audience a clear behaviour they can realistically perform.</span></h3>
+<div class="panel"><p>By translating the broader contention into the tangible action of …, [author] makes compliance appear achievable rather than abstract.</p></div>
 </div>
 </section>
-<section>
-<h2 class="section-title" id="conclusion">CONCLUSION</h2>
-<div class="callout template">
-<p data-cms-text="conclusion.json::template_lines.0">To this end, (author's piece) (adverb) exemplifies the importance of ...</p>
-<p data-cms-text="conclusion.json::template_lines.1">(Author) therefore seeks to influence (type of person) into not only..., but rather to ...</p>
-</div>
-<h3>EXAMPLE:</h3>
-<div class="callout example"><p data-cms-text="conclusion.json::example">To this end, Wiley’s piece ardently exemplifies the importance of adopting a tourist attraction to ensure the financial prosperity of Lawton and its community members (CONTENTION). Wiley therefore seeks to influence community residents into not only reconsidering their stance on tourist attractions, but rather to champion for its implementation in the immediate future (AUDIENCE GOING TO DO).</p></div>
+<section id="conclusion">
+<h2>Conclusion</h2>
+<div class="callout template"><p>Ultimately, through [final persuasive strategy], [author] consolidates their portrayal of …, encouraging [specific audience] to …</p></div>
+<div class="callout example"><p>A strong conclusion should synthesise the author’s final positioning of the audience rather than merely repeat the contention.</p></div>
 </section>
-<section>
-<h2 class="section-title" id="five-steps-analysis">5 STEPS OF ANALYSIS</h2>
-<ol class="step-list analysis-steps" data-cms-list="analysis.json::steps">
-<li>(1) Embed the quote or image</li>
-<li>(2) Specific audience</li>
-<li>(3) Specific emotion – adverb verbs</li>
-<li>(4) Why do they feel that way? Technique Analysis</li>
-<li>(5) What are they going to do</li>
-</ol>
-<h3>QUOTE ANALYSIS EXAMPLE:</h3>
-<div class="callout example colour-coded-callout"><p class="colour-coded-example"><span class="highlight analysis-1" data-cms-text="analysis.json::quote_segments.0">By wholeheartedly affirming that 'my child was hypnotised by the IPAD',</span> <span class="highlight analysis-2" data-cms-text="analysis.json::quote_segments.1">Mahde seeks to position parents – who potentially care about their child's ability to be free and have clear eyesight –</span> <span class="highlight analysis-3" data-cms-text="analysis.json::quote_segments.2">into feeling unwaveringly despondent</span> <span class="highlight analysis-4" data-cms-text="analysis.json::quote_segments.3">since the term 'hypnotised' creates an image of paralysis.</span> <span class="highlight analysis-5" data-cms-text="analysis.json::quote_segments.4">Therefore, such parents are influenced to undertake proactive measures to restrict their child's IPAD use.</span></p></div>
-<h3>IMAGE ANALYSIS EXAMPLE:</h3>
-<div class="callout example colour-coded-callout"><p class="colour-coded-example"><span class="highlight analysis-1" data-cms-text="analysis.json::image_segments.0">By presenting a compositionally dominating image of a visibly exhausted student surrounded by piles of unfinished schoolwork,</span> <span class="highlight analysis-2" data-cms-text="analysis.json::image_segments.1">the author seeks to position parents</span> <span class="highlight analysis-3" data-cms-text="analysis.json::image_segments.2">into feeling concerned</span> <span class="highlight analysis-neutral" data-cms-text="analysis.json::image_segments.3">about excessive academic pressure,</span> <span class="highlight analysis-4" data-cms-text="analysis.json::image_segments.4">since the student’s slumped posture and overwhelming surroundings represent the damaging consequences of relentless expectations.</span> <span class="highlight analysis-5" data-cms-text="analysis.json::image_segments.5">Therefore, such parents are influenced to reconsider the pressure they place upon young people.</span></p></div>
+<section id="5-steps-of-analysis">
+<h2>5 Steps of Analysis</h2>
+<ul class="step-list analysis-steps"><li>1 · Identify the Technique</li><li>2 · Explain the Mechanism</li><li>3 · Identify the Specific Audience</li><li>4 · Explain the Audience Effect</li><li>5 · Connect to the Argument</li></ul>
+<div class="callout template"><p><span class="highlight analysis-1">By employing [technique]</span>, <span class="highlight analysis-2">[author] [mechanism]</span>, thereby positioning <span class="highlight analysis-3">[specific audience]</span> to <span class="highlight analysis-4">[reaction / emotion]</span> and ultimately encouraging them to <span class="highlight analysis-5">[accept the relevant argument / act].</span></p></div>
 </section>
-<section>
-<h2 class="section-title" id="next-level-five-steps-analysis">NEXT LEVEL 5 STEPS OF ANALYSIS</h2>
-<ol class="step-list next-steps" data-cms-list="next-level-analysis.json::steps">
-<li>1) Embed the quote or image</li>
-<li>2) Why do they feel that way? Technique Analysis</li>
-<li>3) Specific audience</li>
-<li>4) Specific emotion – adverb verbs</li>
-<li>5) What are they going to do</li>
-</ol>
-<h3>QUOTE ANALYSIS EXAMPLE:</h3>
-<div class="callout example colour-coded-callout"><p class="colour-coded-example"><span class="highlight analysis-1" data-cms-text="next-level-analysis.json::quote_segments.0">Cataclysmically portraying that 'studying VCE is like bleeding every single day in a world of enemies',</span> <span class="highlight analysis-4" data-cms-text="next-level-analysis.json::quote_segments.1">Mariam establishes a war-like battlefield regarding the struggles of VCE and exams, since the term 'bleeding' conjures a destructive image of blood loss due to the assessments.</span> <span class="highlight analysis-2" data-cms-text="next-level-analysis.json::quote_segments.2">Here / In this way, Mariam seeks to position VCE students – who potentially do not want to bleed in their studies –</span> <span class="highlight analysis-3" data-cms-text="next-level-analysis.json::quote_segments.3">into wholeheartedly focusing on their VCE</span> <span class="highlight analysis-5" data-cms-text="next-level-analysis.json::quote_segments.4">and as such are influenced to reconsider their stance on the importance of studying.</span></p></div>
+<section id="next-level-analysis">
+<h2>Next Level Analysis</h2>
+<ul class="step-list next-steps"><li>Mechanism</li><li>Authorial Choice</li><li>Audience Values</li><li>Audience Positioning</li><li>Argument Function</li></ul>
+<div class="panel"><p>High-level analysis explains <strong>why this specific persuasive choice is strategically suited to this specific audience at this specific stage of the argument.</strong></p></div>
 </section>
-<section>
-<h2 class="section-title" id="persuasive-technique-setups">PERSUASIVE TECHNIQUE SETUPS</h2>
-<div class="section-block technique-card accent-cyan" id="technique-plosive">
-<h3 class="technique-heading">Plosive</h3>
-<p data-cms-text="techniques/plosive.json::definition_lines.0">Plosive: two words that start either with 't, k, p, OR d, g, b'</p>
-<div class="callout template">
-<p data-cms-text="techniques/plosive.json::templates.0.0">(Author) seeks to create an onomatopoeic soundscape through the plosives of ('d,b,g,t,k,p' – pick first letter) and ('d,b,g,t,k,p – pick second letter),</p>
-<p data-cms-text="techniques/plosive.json::templates.0.1">aurally reflecting the importance of ...</p>
+<section id="common-types-of-arguments">
+<h2>Common Types of Arguments</h2>
+<div class="grid-2">
+<div class="panel"><h3>Problem → Consequence → Solution</h3><p>Establish the issue, magnify its cost, then present the preferred action as necessary or sensible.</p></div>
+<div class="panel"><h3>Shared Values → Threat → Response</h3><p>Build identification, reveal what threatens those values, then mobilise the audience to protect them.</p></div>
+<div class="panel"><h3>Misconception → Correction</h3><p>Present an opposing assumption before dismantling it through reasoning or evidence.</p></div>
+<div class="panel"><h3>Anecdote → Broader Pattern</h3><p>Use an individual event to embody a wider social problem and increase immediacy.</p></div>
 </div>
-<h3>EXAMPLE 1:</h3>
-<div class="callout example"><p data-cms-text="techniques/plosive.json::examples.0.0">Farid seeks to create an onomatopoeic soundscape through the plosives of ‘p’ and ‘t’ within the word ‘powerfully training’, aurally reflecting the importance of physical exercise in Dagestan much like Khabib.</p></div>
-<h3>EXAMPLE 2:</h3>
-<div class="callout example"><p data-cms-text="techniques/plosive.json::examples.1.0">Penrose seeks to formulate an onomatopoeic soundscape through the plosives of ‘p’ and A‘T’ within the words ‘Phantasmagorical thoughts’, aurally reflecting the importance of one’s imaginative psyche, akin to Fischer who actively resides within the parameters of his dreams.</p></div>
-</div>
-<div class="section-block technique-card accent-green" id="technique-alliteration">
-<h3 class="technique-heading">Alliteration</h3>
-<div class="callout template"><p data-cms-text="techniques/alliteration.json::templates.0.0">Alliteratively commencing with 'letter' in 'two words', (author) repetitiously underscores ..., positioning ...</p></div>
-<h3>EXAMPLE:</h3>
-<div class="callout example"><p data-cms-text="techniques/alliteration.json::examples.0.0">Alliteratively commencing with the letter 'a' in 'astonishing achievements', Zohair repetitiously underscores the importance of studying for VCE in the early mornings, positioning ...</p></div>
-</div>
-<div class="section-block technique-card accent-violet" id="technique-anaphora">
-<h3 class="technique-heading">Anaphora</h3>
-<div class="callout template"><p data-cms-text="techniques/anaphora.json::templates.0.0">Anaphorically highlighting that '...',</p><p data-cms-text="techniques/anaphora.json::templates.0.1">(author) repetitiously underscores ... since the term '...' imbues connotations of ...</p></div>
-<h3>EXAMPLE:</h3>
-<div class="callout example"><p data-cms-text="techniques/anaphora.json::examples.0.0">Anaphorically highlighting that 'you are a champion' and 'you are the best', (author) repetitiously underscores the importance of perseverance in VCE since the term 'you are' imbues connotations of direct responsibility and growth.</p></div>
-</div>
-<div class="section-block technique-card accent-orange" id="technique-rhetorical-questions">
-<h3 class="technique-heading">Rhetorical Questions</h3>
-<h4 class="subtechnique-heading" data-cms-text="techniques/rhetorical-questions.json::subtechniques.0.title" id="technique-rhetorical-questions-many">Many</h4>
-<div class="callout template"><p data-cms-text="techniques/rhetorical-questions.json::subtechniques.0.templates.0">Rhetorically bombarding (person) with remarks, ranging from ('rhetorical 1') to ('rhetorical 2') to ('rhetorical 3'),</p><p data-cms-text="techniques/rhetorical-questions.json::subtechniques.0.templates.1">(author) (adverb verb) the importance of ...</p></div>
-<h3>EXAMPLE:</h3>
-<div class="callout example"><p data-cms-text="techniques/rhetorical-questions.json::subtechniques.0.examples.0">Rhetorically bombarding residents with remarks, ranging from ‘how will you afford a house?’ to ‘are you really trying?’ to ‘don’t your kids need you?’, Khaled pointedly accentuates the importance of easing the housing crisis …</p></div>
-<h4 class="subtechnique-heading" data-cms-text="techniques/rhetorical-questions.json::subtechniques.1.title" id="technique-rhetorical-questions-single">Single</h4>
-<div class="callout template"><p data-cms-text="techniques/rhetorical-questions.json::subtechniques.1.templates.0">Rhetorically questioning ('rhetorical q'), (author) seeks to (adverb verb) the ...</p></div>
-<h3>EXAMPLE 1:</h3>
-<div class="callout example"><p data-cms-text="techniques/rhetorical-questions.json::subtechniques.1.examples.0">Rhetorically questioning ‘can you survive without food?’, Seif seeks to pointedly accentuate the damaging effects of the housing crisis and cost of living.</p></div>
-<h3>EXAMPLE 2:</h3>
-<div class="callout example"><p data-cms-text="techniques/rhetorical-questions.json::subtechniques.1.examples.1">Rhetorically questioning ‘how would it feel like to be homeless?’, Haseeb seeks to pointedly accentuate that homelessness is an ill experience that no person would feel inclined to feel.</p></div>
-</div>
-<div class="section-block technique-card accent-blue" id="technique-imagery-types">
-<h3 class="technique-heading">IMAGERY TYPES</h3>
-<h4 class="subtechnique-heading" data-cms-text="techniques/imagery-types.json::subtechniques.0.title" id="technique-imagery-types-visceral-cataclysmic-sensory-imagery">Visceral / Cataclysmic / Sensory Imagery</h4>
-<div class="callout template"><p data-cms-text="techniques/imagery-types.json::subtechniques.0.templates.0">Cataclysmically portraying that '...',</p><p data-cms-text="techniques/imagery-types.json::subtechniques.0.templates.1">(author) viscerally establishes a war-like battlefield regarding ..., since term 'word' conjures a destructive image of ...</p></div>
-<h3>EXAMPLE:</h3>
-<div class="callout example"><p data-cms-text="techniques/imagery-types.json::subtechniques.0.examples.0">Cataclysmically portraying that 'studying VCE is like bleeding every single day in a world of enemies', Mariam establishes a war-like battlefield regarding the struggles of VCE and exams, since the term 'bleeding' conjures a destructive image of blood loss due to the assessments.</p></div>
-<h4 class="subtechnique-heading" data-cms-text="techniques/imagery-types.json::subtechniques.1.title" id="technique-imagery-types-utopic-imagery">Utopic Imagery</h4>
-<div class="callout template"><p data-cms-text="techniques/imagery-types.json::subtechniques.1.templates.0">Utopically presenting that '...',</p><p data-cms-text="techniques/imagery-types.json::subtechniques.1.templates.1">(author) euphorically highlights ... given the word '...' creates an image of ...</p></div>
-<h3>EXAMPLE:</h3>
-<div class="callout example"><p data-cms-text="techniques/imagery-types.json::subtechniques.1.examples.0">Utopically presenting that 'doing pushups will make you fly above the sky', Zohair euphorically highlights the power of exercise on the mind of individuals given the word 'fly' creates an image of elevation.</p></div>
-<h4 class="subtechnique-heading" data-cms-text="techniques/imagery-types.json::subtechniques.2.title" id="technique-imagery-types-dystopic-imagery">Dystopic Imagery</h4>
-<div class="callout template"><p data-cms-text="techniques/imagery-types.json::subtechniques.2.templates.0">In dystopically presenting that '...',</p><p data-cms-text="techniques/imagery-types.json::subtechniques.2.templates.1">(author) despondently / melancholically underscores... given the term '...' imbues connotations of ...</p></div>
-<h3>EXAMPLE:</h3>
-<div class="callout example"><p data-cms-text="techniques/imagery-types.json::subtechniques.2.examples.0">In dystopically presenting that 'chocolate is the silent zombie that murders innocent people', Lebdeh despondently underscores the dangers of consuming junk food given the term 'silent zombie' imbues connotations of destruction and annihilation.</p></div>
-</div>
-<div class="section-block technique-card accent-rose" id="technique-bold-word-title">
-<h3 class="technique-heading">Bold Word/Title</h3>
-<div class="callout template"><p data-cms-text="techniques/bold-word-title.json::templates.0.0">Given ‘hello’ in ‘hello there’ is emboldened, X seeks to visually bombard _ to emphasise … (the point being made)</p></div>
-<h3>EXAMPLE:</h3>
-<div class="callout example"><p data-cms-text="techniques/bold-word-title.json::examples.0.0">Given ’dangerous’ in ‘broadmeadows is dangerous’ is emboldened, X seeks to visually bombard the parents who care for their children's safety to emphasise that Broadmeadows is a location to avoid, as the crime rates have increased rapidly over 30% in the last 3 years.</p></div>
-</div>
-<div class="section-block technique-card accent-cyan" id="technique-anecdotal-evidence">
-<h3 class="technique-heading">Anecdotal Evidence</h3>
-<div class="callout template"><p data-cms-text="techniques/anecdotal-evidence.json::templates.0.0">Anecdotally explaining that she has ‘travelled through the mountains earlier today’,</p><p data-cms-text="techniques/anecdotal-evidence.json::templates.0.1">the author seeks to establish a rapport with mountain goers, since they are ‘...’</p></div>
-<h3>EXAMPLE:</h3>
-<div class="callout example"><p data-cms-text="techniques/anecdotal-evidence.json::examples.0.0">Anecdotally explaining that she has ‘saw a child buy a sushi roll and apply soy sauce from a cute little plastic fish’, Walker seeks to establish a rapport with parents who are curious about the workings of their children at school, since they resonate with the observations of the teacher.</p></div>
-</div>
-<div class="section-block technique-card accent-green" id="technique-dichotomy">
-<h3 class="technique-heading">Dichotomy</h3>
-<div class="callout template"><p data-cms-text="techniques/dichotomy.json::templates.0.0">The writer seeks to dichotomise the matter between those with contemporary mindsets who rely upon ‘studying every day’ and those only open to ‘studying once every month’, positioning the boys to view the latter as ignorant and conservatively minded.</p></div>
-</div>
-<div class="section-block technique-card accent-violet" id="technique-statistics">
-<h3 class="technique-heading">Statistics</h3>
-<div class="callout template"><p data-cms-text="techniques/statistics.json::templates.0.0">Here, the empirical statistic of ‘50%’ unequivocally undermines/elevates the importance of studying daily given individuals – who are less informed of studying - are positioned to …</p></div>
-</div>
-<div class="section-block technique-card accent-orange" id="technique-tonal-shift">
-<h3 class="technique-heading">Tonal Shift</h3>
-<div class="callout tone">
-<p data-cms-text="techniques/tonal-shift.json::tone_lines.0">1. By morphing into an angered tone, ‘I hate you’ attempts to show the author is scathingly rebuking a child’s use of technology.</p>
-<p data-cms-text="techniques/tonal-shift.json::tone_lines.1">2. Here, ‘hate’ in ‘I hate you’ has undertones of anger as the author is scathingly rebuking a child’s use of technology.</p>
-</div>
-</div>
-<div class="section-block technique-card accent-blue" id="technique-connotations">
-<h3 class="technique-heading">Connotations</h3>
-<div class="callout template"><p data-cms-text="techniques/connotations.json::templates.0.0">Given ‘hate’ imbues strong connotations of…, the author seeks to evoke a sense of…</p></div>
-<h3>EXAMPLE:</h3>
-<div class="callout example"><p data-cms-text="techniques/connotations.json::examples.0.0">Given the term ‘hate’ in ‘hate people who discriminate’ imbues strong connotations of discrimination, Hamza seeks to evoke a sense of unwavering concern in parents who may dislike individuals who belittle others and fear for the mental wellbeing of their children, prompting them to condemn such behaviour among young adults that stems from social media.</p></div>
-</div>
-<div class="section-block technique-card accent-rose" id="technique-image-analysis">
-<h3 class="technique-heading">Image Analysis</h3>
-<ul class="bullet-list" data-cms-list="techniques/image-analysis.json::analysis_points">
-<li>Positioning of the subject (prominent in the foreground or miniscule in the background) …</li>
-<li>Here, the compositionally dominating image of…</li>
-<li>By positioning X in the foreground/background/centre/side of the *type of image*, author attempts to establish dominance/inferiority of X in *issue*.</li>
-<li>The stark contrast between the darker/lighter foreground and the darker/lighter in the image employed by the writer serves to arouse an awareness/sensation of …</li>
-<li>Colours (dull being emotionless, bright being full of joy etc., contrast between cold and hot colours)</li>
-<li>By deploying ominous/propitious *type of colours* the author accentuates the *target emotion* of *the issue*</li>
-<li>Facial expressions and body language: Through X’s prominent/contorted *facial expression/body language*, the author seeks to visually reflect the emotions of *the issue*</li>
-</ul>
-<h3>EXAMPLE:</h3>
-<div class="callout example">
-<p data-cms-text="techniques/image-analysis.json::examples.0.0">The image showcases a drone at a compositionally dominating angle as such, it sets a focal point on the potential destruction that can be imposed on Byways caused by misuse of drones.</p>
-<p data-cms-text="techniques/image-analysis.json::examples.0.1">Further amplified through by the grey atmosphere of the patchy skies and dull grass, the image is presented in the ominous colour scheme of black and white that pointedly highlights the potential concerns and repercussions to come for the future of Byways. Bandle portrays this image to prompt councillors and residents of Byways who are preservative of their property to take caution and diligence towards using such devices.</p>
-</div>
-</div>
-<div class="section-block technique-card accent-cyan" id="technique-asyndeton">
-<h3 class="technique-heading">Asyndeton</h3>
-<div class="callout template"><p data-cms-text="techniques/asyndeton.json::templates.0.0">Asyndetically highlighting that ‘chocolates are better, brownies are worse, fruits are superior’, Shaima rhythmically establishes …</p></div>
-</div>
-<div class="section-block technique-card accent-green" id="technique-semantic-field">
-<h3 class="technique-heading">Semantic Field</h3>
-<p data-cms-text="techniques/semantic-field.json::definition_lines.0">Semantic field: a group of words connected by a shared idea or concept.</p>
-<div class="callout template"><p data-cms-text="techniques/semantic-field.json::templates.0.0">By constructing a semantic field of [idea] with the terms '[word 1]', '[word 2]' and '[word 3]', (author) underscores ..., positioning ...</p></div>
-<h3>EXAMPLE:</h3>
-<div class="callout example"><p data-cms-text="techniques/semantic-field.json::examples.0.0">By constructing a semantic field of destruction with the terms ‘'damaged', 'shattered' and 'broken', Wargan cumulatively underscores the ominous repercussions of retail crime, positioning local shoppers to reject passive bystanding.</p></div>
-</div>
-<div class="section-block technique-card accent-violet" id="technique-auxesis">
-<h3 class="technique-heading">Auxesis</h3>
-<p data-cms-text="techniques/auxesis.json::definition_lines.0">Auxesis: the deliberate arrangement of words or ideas in increasingly forceful order.</p>
-<div class="callout template"><p data-cms-text="techniques/auxesis.json::templates.0.0">Auxetically escalating from '[least intense]' to '[more intense]' and finally '[most intense]', (author) progressively intensifies ..., positioning ...</p></div>
-<h3>EXAMPLE:</h3>
-<div class="callout example"><p data-cms-text="techniques/auxesis.json::examples.0.0">Auxetically escalating from ‘uncomfortable’ to ‘unsafe’ and finally ‘dangerous’, Wargan progressively intensifies the consequences of unchecked retail crime, positioning local shoppers to fear that continued passivity will progressively threaten their community.</p></div>
-</div>
-<div class="section-block technique-card accent-orange" id="technique-syntactic-parallelism">
-<h3 class="technique-heading">Syntactic Parallelism</h3>
-<p data-cms-text="techniques/syntactic-parallelism.json::definition_lines.0">Syntactic parallelism refers to the repetition of a word at the beginning of 2 or more consecutive sentences.</p>
-<div class="callout template"><p data-cms-text="techniques/syntactic-parallelism.json::templates.0.0">Syntactically parallelising the repeated opening '[word]' in '[sentence 1]' and '[sentence 2]', (author) repetitiously underscores ..., positioning ...</p></div>
-<h3>EXAMPLE:</h3>
-<div class="callout example"><p data-cms-text="techniques/syntactic-parallelism.json::examples.0.0">Syntactically parallelising the repeated opening ‘we’ in ‘We report the incident. We support the worker’ and ‘We must protect the community’, Wargan repetitiously underscores the collective responsibility of Roxburgh Park residents, creating rhythmic insistence that mobilise them to view safe intervention as a shared duty.</p></div>
-</div>
+</section>
+<section id="persuasive-technique-setups">
+<h2>Persuasive Technique Setups</h2>
+<p>Use the setup formulas below as flexible analytical frameworks. The strongest analysis adapts the wording to the specific argument, audience and context rather than reproducing a formula mechanically.</p>
+<article class="technique-card accent-cyan" id="alliteration"><h2 class="technique-heading">Alliteration</h2><p><strong>Setup:</strong> Through the deliberate alliteration of “[quote]”, [author] creates a memorable rhythmic emphasis around …</p><p class="mini-analysis"><strong>Push further:</strong> analyse what idea is made more memorable or emotionally charged by the sound pattern.</p></article>
+<article class="technique-card accent-violet" id="anaphora"><h2 class="technique-heading">Anaphora</h2><p><strong>Setup:</strong> Through the anaphoric repetition of “[opening phrase]”, [author] rhythmically reinforces …</p><p class="mini-analysis"><strong>Push further:</strong> explain how repeated sentence openings accumulate urgency, certainty or emotional momentum.</p></article>
+<article class="technique-card accent-green" id="anecdotal-evidence"><h2 class="technique-heading">Anecdotal Evidence</h2><p><strong>Setup:</strong> By recounting the personal experience of …, [author] humanises the broader issue of …</p><p class="mini-analysis"><strong>Push further:</strong> explain why this individual story may appear authentic, relatable or representative to the target audience.</p></article>
+<article class="technique-card accent-orange" id="asyndeton"><h2 class="technique-heading">Asyndeton</h2><p><strong>Setup:</strong> Through the asyndetic listing of “[terms]”, [author] accelerates the pace of the sentence and creates an impression of …</p></article>
+<article class="technique-card accent-blue" id="auxesis"><h2 class="technique-heading">Auxesis</h2><p><strong>Setup:</strong> Through auxesis, [author] escalates from “[initial term]” to “[stronger term]”, progressively intensifying the perceived severity of …</p><p class="mini-analysis"><strong>Push further:</strong> identify the progression in force and explain how the climax shapes the audience’s sense of urgency.</p></article>
+<article class="technique-card accent-rose" id="bold-word-title"><h2 class="technique-heading">Bold Word / Title</h2><p><strong>Setup:</strong> By visually foregrounding the term “[word/title]” through bold typography, [author] directs immediate attention toward …</p></article>
+<article class="technique-card accent-cyan" id="connotations"><h2 class="technique-heading">Connotations</h2><p><strong>Setup:</strong> The term “[word]” carries connotations of …, enabling [author] to characterise … as …</p><p class="mini-analysis"><strong>Push further:</strong> name the precise associations activated by the word instead of merely calling the language “negative” or “positive”.</p></article>
+<article class="technique-card accent-violet" id="dichotomy"><h2 class="technique-heading">Dichotomy</h2><p><strong>Setup:</strong> By constructing a dichotomy between “[side one]” and “[side two]”, [author] narrows the audience’s perceived choices and privileges …</p></article>
+<article class="technique-card accent-green" id="image-analysis"><h2 class="technique-heading">Image Analysis</h2><p><strong>Setup:</strong> By presenting an image of … [describe the image], the [author] seeks to position [specific audience] into … [feeling a certain way, emotion] since [what does the image represent]. Therefore, such [audience] are influenced to [specific response or action].</p><div class="callout example"><p><strong>Example:</strong> By presenting an image of an exhausted student surrounded by unfinished schoolwork, the author seeks to position parents into feeling concerned for students’ wellbeing since the image represents the damaging consequences of excessive academic pressure. Therefore, such parents are influenced to support the author’s call for a more balanced workload.</p></div></article>
+<article class="technique-card accent-orange" id="imagery-types"><h2 class="technique-heading">Imagery Types</h2><h3 class="subtechnique-heading">Visual Imagery</h3><p>Creates a picture in the audience’s mind through sight-based description.</p><h3 class="subtechnique-heading">Auditory Imagery</h3><p>Uses sound-based description to make an event feel immediate or confronting.</p><h3 class="subtechnique-heading">Tactile Imagery</h3><p>Invokes touch, texture or bodily sensation to intensify physical immediacy.</p></article>
+<article class="technique-card accent-blue" id="plosive"><h2 class="technique-heading">Plosive</h2><p><strong>Setup:</strong> Through the repeated plosive consonants in “[quote]”, [author] creates a sharp, forceful sound that acoustically reinforces …</p><p class="mini-analysis"><strong>Push further:</strong> connect the sound quality to the author’s tone or characterisation rather than treating plosives as automatically “aggressive”.</p></article>
+<article class="technique-card accent-rose" id="rhetorical-questions"><h2 class="technique-heading">Rhetorical Questions</h2><p><strong>Setup:</strong> By asking “[question]?”, [author] invites [audience] to internally supply the assumed answer that …</p><p class="mini-analysis"><strong>Push further:</strong> identify the assumption built into the question and explain how disagreement is made to appear unreasonable, uncomfortable or morally suspect.</p></article>
+<article class="technique-card accent-cyan" id="semantic-field"><h2 class="technique-heading">Semantic Field</h2><p><strong>Setup:</strong> Through a semantic field of [concept], with the terms “[term]”, “[term]” and “[term]”, [author] constructs …</p><p class="mini-analysis"><strong>Push further:</strong> explain the cumulative conceptual pattern created by the related vocabulary.</p></article>
+<article class="technique-card accent-violet" id="statistics"><h2 class="technique-heading">Statistics</h2><p><strong>Setup:</strong> By citing the statistic “[data]”, [author] lends numerical authority to the claim that …</p></article>
+<article class="technique-card accent-green" id="syntactic-parallelism"><h2 class="technique-heading">Syntactic Parallelism</h2><p><strong>Setup:</strong> Through syntactic parallelism in “[first clause] [second clause]”, [author] creates a balanced rhythmic structure that reinforces …</p><p class="mini-analysis"><strong>Push further:</strong> identify exactly what grammatical structure is repeated and why the parallel construction makes the paired ideas feel equivalent, cumulative or memorable.</p></article>
+<article class="technique-card accent-orange" id="tonal-shift"><h2 class="technique-heading">Tonal Shift</h2><p><strong>Setup:</strong> [Author] shifts from a [initial tone] tone to a [later tone] tone, marking a strategic transition from … to …</p></article>
+</section>
+<section id="spoken-audio-texts">
+<h2>Spoken / Audio Texts</h2>
+<div class="grid-2"><div class="panel"><h3>Vocal Delivery</h3><p>Analyse pace, stress, pause, volume, intonation and changes in vocal energy where they materially shape persuasion.</p></div><div class="panel"><h3>Sound and Music</h3><p>Analyse how music, silence, sound effects or ambient noise frame the audience’s emotional response and interact with the spoken argument.</p></div></div>
+</section>
+<section id="audience-analysis">
+<h2>Audience Analysis</h2>
+<p><strong>How to identify the specific audience:</strong> look for directly addressed groups, stakeholders affected by the issue, groups whose values are invoked, and people capable of performing the requested action.</p>
+<div class="grid-2"><div class="panel"><h3>Audience Values</h3><p>What might this group value, fear, already believe or potentially overlook?</p></div><div class="panel"><h3>Audience Reaction</h3><p>What precise emotion, judgment or behavioural response is the author attempting to create?</p></div></div>
+</section>
+<section id="common-types-of-pieces">
+<h2>Common Types of Pieces</h2>
+<div class="grid-3"><div class="panel"><h3>Opinion Piece</h3><p>Often uses a personal voice, explicit contention and sustained persuasive argument.</p></div><div class="panel"><h3>Editorial</h3><p>May speak with an institutional or publication-level voice and present a broader communal position.</p></div><div class="panel"><h3>Speech</h3><p>Often uses direct address, repetition, inclusive pronouns and rhythmic structures suited to live delivery.</p></div></div>
+</section>
+<section id="final-checklist">
+<h2>Final Checklist</h2>
+<ul class="check-list"><li>Have I identified the author’s argument rather than merely listed techniques?</li><li>Have I specified the relevant audience instead of repeatedly writing “the reader”?</li><li>Have I explained how the language or visual actually produces the intended response?</li><li>Have I connected each analytical point to the progression of the argument?</li><li>Have I used precise evidence?</li><li>Have I varied my analytical verbs and sentence structures?</li><li>Have I avoided simply labelling language as positive, negative or persuasive?</li></ul>
 </section>
 </main>
 <script>
 (() => {
   const body = document.body;
-  const button = document.querySelector('.menu-toggle');
-  const nav = document.getElementById('site-navigation');
-  const overlay = document.querySelector('.nav-overlay');
-
-  const setOpen = (open) => {
-    body.classList.toggle('nav-open', open);
-    button.setAttribute('aria-expanded', String(open));
-    button.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+  const toggle = document.getElementById('navToggle');
+  const overlay = document.getElementById('navOverlay');
+  const nav = document.getElementById('sidebarNav');
+  const close = () => {
+    body.classList.remove('nav-open');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', 'Open guide navigation');
   };
-
-  button.addEventListener('click', () => setOpen(!body.classList.contains('nav-open')));
-  overlay.addEventListener('click', () => setOpen(false));
-  nav.addEventListener('click', (event) => {
-    if (event.target.closest('a[href^="#"]')) setOpen(false);
-  });
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') setOpen(false);
-  });
-
-  const navLinks = [...nav.querySelectorAll('a[href^="#"]')];
-  const linkById = new Map(navLinks.map(link => [decodeURIComponent(link.getAttribute('href').slice(1)), link]));
-  const targets = [...linkById.keys()].map(id => document.getElementById(id)).filter(Boolean);
-  if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver((entries) => {
-      const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-      if (!visible.length) return;
-      navLinks.forEach(link => link.classList.remove('is-active'));
-      const active = linkById.get(visible[0].target.id);
-      if (active) active.classList.add('is-active');
-    }, { rootMargin: '-12% 0px -74% 0px', threshold: 0 });
-    targets.forEach(target => observer.observe(target));
-  }
-})();
-</script>
-
-
-<script>
-(() => {
-  const cache = new Map();
-  const SUPABASE_URL = 'https://gsgvejjnorbnizddjnfw.supabase.co';
-  const SUPABASE_KEY = 'sb_publishable_A4eEoTqk47CdDo76iJZGqg_w-4qg7fd';
-  const getPath = (obj, path) => path.split('.').reduce((value, key) => value == null ? undefined : value[/^\d+$/.test(key) ? Number(key) : key], obj);
-  const loadBaseline = async (file) => {
-    const response = await fetch(`/content/${file}`, { cache: 'no-store' });
-    if (!response.ok) throw new Error(`Could not load ${file}`);
-    return response.json();
+  const open = () => {
+    body.classList.add('nav-open');
+    toggle.setAttribute('aria-expanded', 'true');
+    toggle.setAttribute('aria-label', 'Close guide navigation');
   };
-  const loadFile = async (file) => {
-    if (!cache.has(file)) cache.set(file, (async () => {
-      const baseline = await loadBaseline(file);
-      try {
-        const url = `${SUPABASE_URL}/rest/v1/ala_content?path=eq.${encodeURIComponent(file)}&select=content`;
-        const response = await fetch(url, { cache: 'no-store', headers: { apikey: SUPABASE_KEY } });
-        if (!response.ok) return baseline;
-        const rows = await response.json();
-        return rows.length && rows[0]?.content ? rows[0].content : baseline;
-      } catch { return baseline; }
-    })());
-    return cache.get(file);
-  };
-  const parse = (spec) => { const [file, path] = spec.split('::'); return { file, path }; };
-  const applyText = async (element) => {
-    const { file, path } = parse(element.dataset.cmsText);
-    const value = getPath(await loadFile(file), path);
-    if (value !== undefined && value !== null) element.textContent = String(value);
-  };
-  const applyList = async (element) => {
-    const { file, path } = parse(element.dataset.cmsList);
-    const value = getPath(await loadFile(file), path);
-    if (!Array.isArray(value)) return;
-    const isList = /^(UL|OL)$/.test(element.tagName);
-    const heading = !isList ? element.querySelector(':scope > h3')?.cloneNode(true) : null;
-    const items = value.map((text) => {
-      const node = document.createElement(isList ? 'li' : 'p');
-      node.textContent = String(text);
-      return node;
-    });
-    element.replaceChildren(...(heading ? [heading] : []), ...items);
-  };
-  Promise.allSettled([
-    ...[...document.querySelectorAll('[data-cms-text]')].map(applyText),
-    ...[...document.querySelectorAll('[data-cms-list]')].map(applyList)
-  ]);
+  toggle.addEventListener('click', () => body.classList.contains('nav-open') ? close() : open());
+  overlay.addEventListener('click', close);
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
 })();
 </script>
 </body></html>
