@@ -1,4 +1,5 @@
 [build]
+  command = "node scripts/final-hallab-fix.cjs"
   publish = "."
 
 [[headers]]
